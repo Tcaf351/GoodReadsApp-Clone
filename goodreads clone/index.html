@@ -11,27 +11,40 @@
 
 
   <body class="max-w-xl m-auto">
-    <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4">
+    
+    <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4"> 
       <div class="flex flex-1">
-          <li class="list-none"><a href="#">+</a></li>
-      </div>
-  
-      <div class="absolute left-1/2 transform -translate-x-1/2">
+        <li class="list-none"><a href="#">+</a></li>
+        </div>
+        
+        <div class="absolute left-1/2 transform -translate-x-1/2">
           <h1 class="text-md text-gray-900">My Books</h1>
-      </div>
-  
-      <div class="flex flex-1 justify-end">
-          <li class="list-none"><a href="#">🔔</a></li>
-      </div>
-  </nav>
-  
-  
+          </div>
+          
+          <div class="flex flex-1 justify-end">
+            <li class="list-none"><a href="#">🔔</a></li>
+            </div>
+            </nav>
+            
+            
+    <div class="mx-4"> <!-- main body in between header and footer - start -->
+
+      <div class="border-2 border-red-500 flex items-center relative"> <!-- search bar/container start -->
+        <input type="text" 
+        placeholder="Search books on your shelves"
+        class="w-full rounded-full bg-[#f1f1f1] py-[5px] px-[10px] flex-1 pl-8"
+        >
+        <span class="mr-[10px] absolute left-[10px]">&#x1F50D;</span> <!-- icon -->
+      </div> <!-- search bar/container finish -->
 
 
 
-    <div class="">
-      
-    </div>
+
+
+
+
+    </div> <!-- main body in between header and footer - finish -->
+
     <script type="module" src="/app.js"></script>
   </body>
 </html>

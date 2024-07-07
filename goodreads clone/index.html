@@ -9,8 +9,13 @@
     <link rel="stylesheet" href="./index.css">
   </head>
 
-
   <body class="max-w-xl m-auto">
+
+    <!-- spinner - start -->
+    <div class="loader w-12 h-12 border-4 border-white border-b-red-500 rounded-full animate-rotation hidden"></div>
+    <!-- spinner-finish -->
+
+<div id="app" class="hidden">
     
     <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4"> 
         <div class="flex flex-1">
@@ -48,8 +53,8 @@
           </div>
 
           <div>
-            <h3 class="">The Maze Runner</h3>
-            <p class="text-xs mb-1">by James Dashner</p>
+            <h3 class="book-title"></h3>
+            <p class="text-xs mb-1">by <span class="author-name"></span></p>
 
             <button class="bg-[#E4E2D5] text-xs px-3 py-2 mb-2 rounded-md uppercase">Update Progress</button>
 
@@ -91,7 +96,7 @@
 
 
     </div> <!-- main body in between header and footer - finish -->
-    <script src="/app.js"></script>
+    
 
     <footer class="flex items-start justify-center bg-[#E4E2D5] h-20 mt-8">
       <div class="border-solid border-t-2  border-gray-900 py-2 px-4 text-center w-24">
@@ -116,6 +121,8 @@
         <span class="text-xs">Search</span>
       </div>
     </footer>
+    <script src="/app.js"></script>
+  </div>
   </body>
 </html>
 <!--  -->

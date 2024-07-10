@@ -39,9 +39,10 @@ window.onload = () => {
                 const data = await response.json();
                 console.log(data);
                 
-                // const { title, author_name } = data.docs[0];
-                // bookTitle.textContent = title;
-                // authorName.textContent = author_name;
+                const { title, author_name } = data.docs[0]; // set the book title and author name from api
+
+                bookTitle.textContent = title; // change the element text to be the title
+                authorName.textContent = author_name[0]; // change the element text to be the author name
             }
         } catch (error) {
             console.error('Error fetching API:', error);

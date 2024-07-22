@@ -18,7 +18,26 @@
     <!-- spinner-finish -->
 
     <!-- modal - start -->
-     
+     <section class="modal mx-4 bg-gray-300 rounded-md px-4 py-5 h-1/4 hidden"> <!-- modal container --> <!--  -->
+      <nav class="flex justify-between"> <!-- nav section of modal -->
+        <button>Cancel</button>
+        <li class="list-none">Progress</li>
+        <button>Done</button>
+      </nav>
+
+      <div class="flex justify-center"> <!-- page count section of modal -->
+        <span>I'm on page</span>
+        <input type="text" name="page number" class="border-2 border-red-500 mx-1"> <!-- user enters page number -->
+      </div>
+
+      <div class="flex items-center justify-center"> <!-- body count section of modal -->
+        <img src="" alt="book cover"> <!-- shows cover of book -->
+      </div>
+
+      <div class="flex justify-center items-center">
+        <button class="rounded-md bg-[#5F4D3F] py-1 px-2 text-gray-50 text-sm">I've finished this book!</button>
+      </div>
+     </section>
     <!-- modal - finish -->
 
 <div id="app" class="hidden">

@@ -75,27 +75,26 @@ const closeModal = () => {
     overlay.classList.add("hidden");
 };
 
+// takes the book percentage calculation for how far through the book the user is and updates front end text content
+const updateBookPercentage = () => {
+    percentage.textContent = userBookPercentage;
+}
+
+
 // open modal event listener
 updateProgressButton.addEventListener('click', openModal);
 
 // cancel button on modal closes model
 modalCancelButton.addEventListener('click', closeModal);
 
-// done button on modal also closes button
-modalDoneButton.addEventListener('click', () => {
-    // close modal function but updates book percentage when done
-    modal.classList.add('hidden');
-    overlay.classList.add("hidden");
-    percentage.textContent = userBookPercentage;
-});
+// done button on modal closes and updates percentage
+modalDoneButton.addEventListener('click', closeModal);
+modalDoneButton.addEventListener('click', updateBookPercentage);
 
 // close modal when user clicks outside of modal container
 overlay.addEventListener('click', closeModal);
 
-
-// done button fires function that closes modal, updates percentage if update has been entered else no change in percentage
-
-
+// Functionality for percntage update when clicking on the 'done' button on modal
 // get input where user enters the page they're up to
 const pageNumberInput = document.querySelector('#modal-user-page-number');
 const percentage = document.querySelector('#percentage');

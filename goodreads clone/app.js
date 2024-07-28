@@ -1,17 +1,21 @@
-const app = document.querySelector('#app'); // get app
+// get app
+const app = document.querySelector('#app');
 
+// get spinner
+const spinner = document.querySelector('.loader');
 
-const spinner = document.querySelector('.loader'); // get spinner
-
-const showSpinner = () => { // show spinner
+// show spinner
+const showSpinner = () => { 
         spinner.classList.remove('hidden')
 };
 
-const hideSpinner = () => { // hide spinner
+// hide spinner
+const hideSpinner = () => { 
         spinner.classList.add('hidden');
 };
 
-const toggleApp = () => { // removes hidden class from the app to show app
+// removes hidden class from the app to show app
+const toggleApp = () => { 
     app.classList.remove('hidden');
 };
 
@@ -19,38 +23,57 @@ const toggleApp = () => { // removes hidden class from the app to show app
 const bookTitle = document.querySelector('.book-title'); // get book's title
 const authorName = document.querySelector('.author-name'); // get authors name
 
+// window.onload = () => {
+    // search local storage for existing books and display then,
+    // if no books exist, display with the messages 'add a book' in relevant sections
+// };
+
+
+// get search bar
+const searchBar = document.querySelector('#search-bar');
+
+// have initial value for outside event listener
+let inputValue = '';
+
+// add event listener to get the value
+searchBar.addEventListener('input', (e) => {
+    const inputValue = e.target.value;
+
+    // switch spaces for dashes
+    inputValue.split(" ").join("-")
+});
+console.log(inputValue);
 
 // api
-const apiUrl = 'https://openlibrary.org/search.json?q=the+lord+of+the+rings';
+const apiUrl = `https://openlibrary.org/search.json?q=${inputValue}`;
 
-window.onload = () => {
-    let fetchApi = async (url) => { // fetch api onLoad of app opening
-        try {
-            showSpinner(); // Show spinner when starting to fetch API
-            const response = await fetch(url);
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            } else {
-                const data = await response.json();
-                console.log(data);
-                
-                const { title, author_name, number_of_pages_median } = data.docs[0]; // set the book title and author name from api
+let fetchApi = async (url) => { // fetch api onLoad of app opening
+    try {
+        showSpinner(); // Show spinner when starting to fetch API
+        const response = await fetch(url);
 
-                bookTitle.textContent = title; // change the element text to be the title
-                authorName.textContent = author_name[0]; // change the element text to be the author name
-                bookPageCount = number_of_pages_median;
-            }
-        } catch (error) {
-            console.error('Error fetching API:', error);
-        } finally {
-            hideSpinner(); // Hide spinner after fetch is complete
-            toggleApp(); // show app
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        } else {
+            const data = await response.json();
+            console.log(data);
+            
+            const { title, author_name, number_of_pages_median } = data.docs[0]; // set the book title and author name from api
+
+            bookTitle.textContent = title; // change the element text to be the title
+            authorName.textContent = author_name[0]; // change the element text to be the author name
+            bookPageCount = number_of_pages_median;
         }
-    };
-
-    fetchApi(apiUrl);
+    } catch (error) {
+        console.error('Error fetching API:', error);
+    } finally {
+        hideSpinner(); // Hide spinner after fetch is complete
+        toggleApp(); // show app
+    }
 };
+
+fetchApi(apiUrl);
 
 
 // get update progress button to open modal
@@ -138,3 +161,6 @@ pageNumberInput.addEventListener('input', (e) => {
 
 
 // scan barcode of book to bring up modal
+
+
+// search book on your shelf input - will need to filter through read books

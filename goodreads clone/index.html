@@ -45,28 +45,22 @@
 <div id="app" class="hidden">
     
     <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4 mt-10"> 
-        <div class="flex flex-1">
-          <li class="list-none"><a href="#">+</a></li>
-        </div>
-          
         <div class="absolute left-1/2 transform -translate-x-1/2">
           <h1 class="text-md text-gray-900">My Books</h1>
-        </div>
-            
-        <div class="flex flex-1 justify-end">
-          <li class="list-none"><a href="#">🔔</a></li>
         </div>
     </nav>
             
             
     <div class="mx-4"> <!-- main body in between header and footer - start -->
 
-      <div class="flex items-center relative"> <!-- search bar/container start -->
+      <div class="flex items-center relative w-full"> <!-- search bar/container start -->
         <input type="text" 
-        placeholder="Search books on your shelves"
-        class="w-full rounded-full bg-[#f1f1f1] py-[5px] px-[10px] flex-1 pl-8"
+        placeholder="Search for a book"
+        class="w-full rounded-full bg-[#f1f1f1] py-[5px] px-[10px] flex-1 pl-10"
+        id="search-bar"
         >
-        <span class="mr-[10px] absolute left-[10px]">&#x1F50D;</span> <!-- icon -->
+        <span class="absolute left-3">&#x1F50D;</span> <!-- magnifying glass icon -->
+        <button class="bg-gray-400 rounded-s-none rounded-full absolute right-0 top-0 bottom-0 my-auto h-full px-4">Search</button>
       </div> <!-- search bar/container finish -->
 
       <div class="mt-4"> <!-- reading: title in main body - start -->
@@ -139,13 +133,6 @@
           alt="safari browser unicode" 
           class="mx-auto h-6">
         <span class="text-xs">Discover</span>
-      </div>
-      <div class="py-2 px-4 text-center w-24">
-        <img 
-          src="./img/magnifying-glass-white.png" 
-          alt="search unicode" 
-          class="mx-auto h-6">
-        <span class="text-xs">Search</span>
       </div>
     </footer>
     <script src="/app.js"></script>

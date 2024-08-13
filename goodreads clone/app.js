@@ -1,57 +1,61 @@
-// get app
-const app = document.querySelector('#app');
+// import functions
+import { showSpinner, hideSpinner, app, toggleApp } from "./spinner";
 
-// get spinner
-const spinner = document.querySelector('.loader');
+import { openModal, closeModal, overlay, modalDoneButton, modalCancelButton } from "./updateProgressModal";
 
-// show spinner
-const showSpinner = () => { 
-        spinner.classList.remove('hidden')
-};
-
-// hide spinner
-const hideSpinner = () => { 
-        spinner.classList.add('hidden');
-};
-
-// removes hidden class from the app to show app
-const toggleApp = () => { 
-    app.classList.remove('hidden');
-};
-
+// import { updateBookPercentage, bookPageCount, pageNumberInput, percentage } from "./bookPercentage";
 
 const bookTitle = document.querySelector('.book-title'); // get book's title
 const authorName = document.querySelector('.author-name'); // get authors name
+
+// Buttons
+const searchButton = document.querySelector('#search-button'); // button next to input bar 
+const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
+
+const wantToReadOrReadButton = document.querySelector('#want-to-read-or-read');
 
 // window.onload = () => {
     // search local storage for existing books and display then,
     // if no books exist, display with the messages 'add a book' in relevant sections
 // };
 
-
+//search book - INPUT SEARCH/BUTTON - START
 // get search bar
-const searchBar = document.querySelector('#search-bar');
+const inputSearchBar = document.querySelector('#search-bar');
 
-// have initial value for outside event listener
+// set a global value
 let inputValue = '';
 
-// add event listener to get the value
-searchBar.addEventListener('input', (e) => {
-    const inputValue = e.target.value;
+const getValueOfInput = (e) => {
+    inputValue = e.target.value.replace(/ /g, '-'); // Replace spaces with dashes
+};
 
-    // switch spaces for dashes
-    inputValue.split(" ").join("-")
-});
-console.log(inputValue);
+const getValueOfSearchButton = () => {
+    inputValue;
+};
+
+// add event listener to get the value
+inputSearchBar.addEventListener('input', getValueOfInput);
+
+// Get value on input
+searchButton.addEventListener('click', getValueOfSearchButton);
+// INPUT SEARCH/BUTTON - FINISH
+
+
+// onclick of search button needs to call a function to fetch api
 
 // api
-const apiUrl = `https://openlibrary.org/search.json?q=${inputValue}`;
+// const isbnValue = '/0385472579';
+const isbnValue = '';
+// const bookCoverApi = `https://covers.openlibrary.org/b/isbn${isbnValue}-M.jpg`;
+// const newApi = [title, author_name, number_of_pages_median, ...bookCoverApi];
 
+const apiUrl = `https://openlibrary.org/search.json?q=`;
 
-let fetchApi = async (url) => { // fetch api onLoad of app opening
+const fetchApi = async (api, inputValue) => {
     try {
         showSpinner(); // Show spinner when starting to fetch API
-        const response = await fetch(url);
+        const response = await fetch(api+inputValue);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -73,54 +77,17 @@ let fetchApi = async (url) => { // fetch api onLoad of app opening
     }
 };
 
-fetchApi(apiUrl);
-
-
-// get update progress button to open modal
-const updateProgressButton = document.getElementsByTagName('button')[3]; 
-
-// togggle modal
-const modal = document.querySelector('.modal'); // get modal
-const overlay = document.querySelector('.overlay') // get modal overlay
-
-const modalDoneButton = document.getElementsByTagName('button')[1]; // get done button to close modal
-const modalCancelButton = document.getElementsByTagName('button')[0]; // get cancel button to close modal
-
-// open model
-const openModal = () => {
-    modal.classList.remove('hidden');
-    overlay.classList.remove("hidden");
-};
-
-// close modal
-const closeModal = () => {
-    modal.classList.add('hidden');
-    overlay.classList.add("hidden");
-};
+searchButton.addEventListener('click', () => fetchApi(apiUrl, inputValue));
 
 // takes the book percentage calculation for how far through the book the user is and updates front end text content
 const updateBookPercentage = () => {
     percentage.textContent = userBookPercentage;
 }
 
-
-// open modal event listener
-updateProgressButton.addEventListener('click', openModal);
-
-// cancel button on modal closes model
-modalCancelButton.addEventListener('click', closeModal);
-
-// done button on modal closes and updates percentage
-modalDoneButton.addEventListener('click', closeModal);
-modalDoneButton.addEventListener('click', updateBookPercentage);
-
-// close modal when user clicks outside of modal container
-overlay.addEventListener('click', closeModal);
-
-// Functionality for percntage update when clicking on the 'done' button on modal
 // get input where user enters the page they're up to
 const pageNumberInput = document.querySelector('#modal-user-page-number');
 const percentage = document.querySelector('#percentage');
+
 let bookPageCount = 0; // set an initial value for the book percentage to work off
 let userBookPercentage = 0;
 
@@ -137,8 +104,23 @@ pageNumberInput.addEventListener('input', (e) => {
     }
 });
 
+// EVENT LISTENERS
 
-// search book
+// open modal event listener
+updateProgressButton.addEventListener('click', openModal);
+
+// done button on modal closes and updates percentage
+modalDoneButton.addEventListener('click', closeModal);
+modalDoneButton.addEventListener('click', updateBookPercentage);
+
+// cancel button on modal closes model
+modalCancelButton.addEventListener('click', closeModal);
+
+// close modal when user clicks outside of modal container
+overlay.addEventListener('click', closeModal);
+
+// Functionality for percntage update when clicking on the 'done' button on modal
+
 
 
 

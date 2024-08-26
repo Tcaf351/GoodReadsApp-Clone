@@ -1,18 +1,23 @@
 // import functions
-import { showSpinner, hideSpinner, app, toggleApp } from "./spinner";
+import { showSpinner, hideSpinner } from "./spinner";
 
 import { openModal, closeModal, overlay, modalDoneButton, modalCancelButton } from "./updateProgressModal";
 
 // import { updateBookPercentage, bookPageCount, pageNumberInput, percentage } from "./bookPercentage";
+// get app
+export const app = document.querySelector('#app');
 
 const bookTitle = document.querySelector('.book-title'); // get book's title
 const authorName = document.querySelector('.author-name'); // get authors name
+const ratingAverage = document.querySelector('.rating-average'); // get average rating
+const bookPublisher = document.querySelector('#publisher');
+const bookCover = document.querySelector('.book-cover'); // get book cover
+;
+
 
 // Buttons
 const searchButton = document.querySelector('#search-button'); // button next to input bar 
 const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
-
-const wantToReadOrReadButton = document.querySelector('#want-to-read-or-read');
 
 // window.onload = () => {
     // search local storage for existing books and display then,
@@ -51,6 +56,8 @@ const isbnValue = '';
 // const newApi = [title, author_name, number_of_pages_median, ...bookCoverApi];
 
 const apiUrl = `https://openlibrary.org/search.json?q=`;
+const bookCoverUrl = `https://covers.openlibrary.org/b/isbn/`;
+const bookCoverFileType = `.jpg`;
 
 const fetchApi = async (api, inputValue) => {
     try {
@@ -62,19 +69,39 @@ const fetchApi = async (api, inputValue) => {
         } else {
             const data = await response.json();
             console.log(data);
-            
-            const { title, author_name, number_of_pages_median } = data.docs[0]; // set the book title and author name from api
+
+            const { title, author_name, number_of_pages_median, ratings_average } = data.docs[0]; // set the book title and author name from api
+
+            const publisher = data.docs[0].publisher[0];
+            const isbn = data.docs[0].isbn[0];
 
             bookTitle.textContent = title; // change the element text to be the title
             authorName.textContent = author_name[0]; // change the element text to be the author name
             bookPageCount = number_of_pages_median;
+            ratingAverage.textContent = ratings_average.toFixed(2); // converts to 2 decimal places
+            bookPublisher.textContent = publisher;
+
+            // get book cover
+            bookCover.src = `${bookCoverUrl}${isbn}-L${bookCoverFileType}`;
         }
     } catch (error) {
         console.error('Error fetching API:', error);
     } finally {
         hideSpinner(); // Hide spinner after fetch is complete
-        toggleApp(); // show app
+        // toggleApp(); // show app
+        toggleIndividualBookModal()
     }
+};
+
+// removes hidden class from the app to show app
+const toggleApp = () => { 
+    app.classList.remove('hidden');
+};
+
+const individualBookModal = document.querySelector('#individual-book-modal');
+
+const toggleIndividualBookModal = () => {
+    individualBookModal.classList.remove('hidden')
 };
 
 searchButton.addEventListener('click', () => fetchApi(apiUrl, inputValue));

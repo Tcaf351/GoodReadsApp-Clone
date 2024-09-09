@@ -1,23 +1,27 @@
 // import functions
 import { showSpinner, hideSpinner } from "./spinner";
-
 import { openModal, closeModal, overlay, modalDoneButton, modalCancelButton } from "./updateProgressModal";
 
 // import { updateBookPercentage, bookPageCount, pageNumberInput, percentage } from "./bookPercentage";
 // get app
 export const app = document.querySelector('#app');
 
+// Variables
 const bookTitle = document.querySelector('.book-title'); // get book's title
+const bookSubTitle = document.querySelector('.book-subtitle'); // get book's subtitle
 const authorName = document.querySelector('.author-name'); // get authors name
 const ratingAverage = document.querySelector('.rating-average'); // get average rating
 const bookPublisher = document.querySelector('#publisher');
 const bookCover = document.querySelector('.book-cover'); // get book cover
-;
-
+const bookDescription = document.querySelector('#book-description'); // get book description
 
 // Buttons
 const searchButton = document.querySelector('#search-button'); // button next to input bar 
 const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
+
+// Modals
+const individualBookModal = document.querySelector('#individual-book-modal');
+const modalBookCovers = document.querySelector('#modal-book-covers');
 
 // window.onload = () => {
     // search local storage for existing books and display then,
@@ -32,7 +36,7 @@ const inputSearchBar = document.querySelector('#search-bar');
 let inputValue = '';
 
 const getValueOfInput = (e) => {
-    inputValue = e.target.value.replace(/ /g, '-'); // Replace spaces with dashes
+    return inputValue = e.target.value.replace(/ /g, '+'); // Replace spaces with dashes
 };
 
 const getValueOfSearchButton = () => {
@@ -44,45 +48,39 @@ inputSearchBar.addEventListener('input', getValueOfInput);
 
 // Get value on input
 searchButton.addEventListener('click', getValueOfSearchButton);
-// INPUT SEARCH/BUTTON - FINISH
-
-
-// onclick of search button needs to call a function to fetch api
 
 // api
-// const isbnValue = '/0385472579';
-const isbnValue = '';
-// const bookCoverApi = `https://covers.openlibrary.org/b/isbn${isbnValue}-M.jpg`;
-// const newApi = [title, author_name, number_of_pages_median, ...bookCoverApi];
+const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=`;
+const API_KEY = 'AIzaSyCOiprMZ6jnfmZ2HQuzI-n6XrwTJjeeyhs'
 
-const apiUrl = `https://openlibrary.org/search.json?q=`;
-const bookCoverUrl = `https://covers.openlibrary.org/b/isbn/`;
-const bookCoverFileType = `.jpg`;
 
-const fetchApi = async (api, inputValue) => {
+const fetchApi = async (api) => {
     try {
         showSpinner(); // Show spinner when starting to fetch API
-        const response = await fetch(api+inputValue);
+        const response = await fetch(`${api}${inputValue}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         } else {
-            const data = await response.json();
+            const apiResponse = await response.json();
+            const data = apiResponse?.items[0].volumeInfo
             console.log(data);
 
-            const { title, author_name, number_of_pages_median, ratings_average } = data.docs[0]; // set the book title and author name from api
+            const { title, subtitle, description, averageRating, pageCount, publisher } = data;
+            const authors = data.authors[0];
+            const bookImage = data?.imageLinks.thumbnail
 
-            const publisher = data.docs[0].publisher[0];
-            const isbn = data.docs[0].isbn[0];
+            bookPageCount = pageCount;
+            bookTitle.textContent = title;
+            bookSubTitle.textContent = subtitle;
+            authorName.textContent = `by ${authors}`;
+            bookCover.src = bookImage;
+            ratingAverage.textContent = averageRating;
+            bookDescription.textContent = description;
+            bookPublisher.textContent = `book published by: ${publisher}`;
 
-            bookTitle.textContent = title; // change the element text to be the title
-            authorName.textContent = author_name[0]; // change the element text to be the author name
-            bookPageCount = number_of_pages_median;
-            ratingAverage.textContent = ratings_average.toFixed(2); // converts to 2 decimal places
-            bookPublisher.textContent = publisher;
-
-            // get book cover
-            bookCover.src = `${bookCoverUrl}${isbn}-L${bookCoverFileType}`;
+            modalBookCovers.children[0].src = bookImage;
+            modalBookCovers.children[1].src = bookImage;
         }
     } catch (error) {
         console.error('Error fetching API:', error);
@@ -98,13 +96,13 @@ const toggleApp = () => {
     app.classList.remove('hidden');
 };
 
-const individualBookModal = document.querySelector('#individual-book-modal');
+
 
 const toggleIndividualBookModal = () => {
     individualBookModal.classList.remove('hidden')
 };
 
-searchButton.addEventListener('click', () => fetchApi(apiUrl, inputValue));
+searchButton.addEventListener('click', () => fetchApi(apiUrl));
 
 // takes the book percentage calculation for how far through the book the user is and updates front end text content
 const updateBookPercentage = () => {

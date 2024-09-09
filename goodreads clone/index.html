@@ -12,7 +12,7 @@
   <body class="max-w-xl m-auto relative">
 
     <!-- spinner - start -->
-     <div class="loader flex justify-center items-center h-screen w-full hidden">
+    <div class="loader flex justify-center items-center h-screen w-full hidden">
         <div class=" w-12 h-12 border-4 border-white border-b-red-500 rounded-full animate-rotation "></div>
     </div>
     <!-- spinner-finish -->
@@ -30,7 +30,7 @@
           <input id="modal-user-page-number" type="text" name="page number" class="border-2 border-red-500 mx-1"> <!-- user enters page number -->
         </div>
 
-        <div class="flex items-center justify-center"> <!-- body count section of modal -->
+        <div class="flex items-center justify-center"> <!-- book count section of modal -->
           <img src="" alt="book cover"> <!-- shows cover of book -->
         </div>
 
@@ -43,13 +43,23 @@
     <!-- modal (Update progress) - finish -->
 
     <!-- modal (book details) - start -->
-     <section id="individual-book-modal" class="hidden flex flex-col w-full items-center justify-center h-screen border-solid border-2 border-red-500">
-      <div class="flex items-center justify-center">
-        <img class="book-cover" src="" alt="book cover">
-      </div>
+     <section id="individual-book-modal" class="hidden flex flex-col w-full items-center justify-start h-screen border-solid border-2 border-red-500">
 
-      <div>
+      <div class="relative w-full h-2/5 border-2 border-blue-500">
+
+        <div id="modal-book-covers" class="relative h-full flex items-center justify-center">
+          <img class="absolute z-10 h-full w-full bg-no-repeat bg-cover blur-lg" src="" alt="blurred book cover behind main book cover">
+        
+      
+          <img class="book-cover relative inset-0 z-30 bg-no-repeat bg-cover py-3" src="" alt="book cover">
+        </div>
+      </div>
+      
+    
+
+      <div class="h-full w-full border-2 border-green-500">
         <h1 class="book-title text-xl text-center"></h1>
+        <h3 class="book-subtitle text-md text-center"></h3>
         <p class="author-name text-sm text-center"></p>
 
         <hr class="mt-4 w-[96%] mx-auto">
@@ -72,6 +82,13 @@
             <option value="read">Read</option>
           </select>
         </div>
+        <!-- user chooses how many stars section -->
+         <div class="mt-4 mb-2">
+          <p class="text-center">Rate this book:</p>
+         </div>
+         <div> <!-- book description -->
+            <p id="book-description" class="px-3 text-center"></p>
+         </div>
       </div>
      </section>
     <!-- modal (book details) - finish -->

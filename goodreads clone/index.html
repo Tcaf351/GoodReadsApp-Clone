@@ -48,7 +48,7 @@
       <div class="relative w-full h-2/5">
 
         <div id="modal-book-covers" class="relative h-full flex items-center justify-center">
-          <div class="absolute backdrop-blur bg-opacity-15 saturate-100 backdrop-contrast-100 z-20 h-full w-full"></div>
+          <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100"></div>
 
           <img class="absolute z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
         
@@ -56,11 +56,10 @@
           <img class="book-cover relative inset-0 z-30 bg-no-repeat bg-cover py-3" src="" alt="book cover">
         </div>
       </div>
-      
     
 
       <div class="h-full w-full border-2 border-green-500">
-        <h1 class="book-title text-xl text-center"></h1>
+        <h1 class="book-title text-xl text-center mt-2"></h1>
         <h3 class="book-subtitle text-md text-center"></h3>
         <p class="author-name text-sm text-center"></p>
 
@@ -79,6 +78,7 @@
 
         <div class="flex items-center justify-center">
           <select name="reading" id="reading-dropdown" class="radius">
+            <option value="select">Select</option>
             <option value="want to read">Want to Read</option>
             <option value="currently reading">Currently Reading</option>
             <option value="read">Read</option>
@@ -90,6 +90,9 @@
          </div>
          <div> <!-- book description -->
             <p id="book-description" class="px-3 text-center"></p>
+            <!-- will need to set a character limit and implement a read more button -->
+
+
          </div>
       </div>
      </section>
@@ -172,7 +175,7 @@
     </div> <!-- main body in between header and footer - finish -->
     
 
-    <footer class="flex items-start justify-center bg-[#E4E2D5] h-20 mt-8">
+    <footer class="flex items-start justify-center bg-[#E4E2D5] h-16 mt-8">
       <div class="border-solid border-t-2  border-gray-900 py-2 px-4 text-center w-24">
         <img 
           src="./img/bookmark-white.png" 

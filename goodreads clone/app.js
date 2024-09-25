@@ -18,6 +18,7 @@ const bookDescription = document.querySelector('#book-description'); // get book
 // Buttons
 const searchButton = document.querySelector('#search-button'); // button next to input bar 
 const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
+const dropdown = document.querySelector('#reading-dropdown'); // dropdown options when user is on individual book
 
 // Modals
 const individualBookModal = document.querySelector('#individual-book-modal');
@@ -64,7 +65,7 @@ const fetchApi = async (api) => {
         } else {
             const apiResponse = await response.json();
             const data = apiResponse?.items[0].volumeInfo
-            console.log(data);
+            // console.log(data);
 
             const { title, subtitle, description, averageRating, pageCount, publisher } = data;
             const authors = data.authors[0];
@@ -150,13 +151,61 @@ overlay.addEventListener('click', closeModal);
 
 
 // add book to want to read
+dropdown.addEventListener('change', function() {
+    const selectedOption = this.value;
 
+// book data to be saved to localStorage
+    const bookData = {
+        title: bookTitle.textContent,
+        subtitle: bookSubTitle.textContent,
+        cover: bookCover.currentSrc,
+        description: bookDescription.textContent,
+        author: authorName.textContent, // need to remove 'by'
+        publisher: bookPublisher.textContent,
+        rating: ratingAverage.textContent
+    };
+    console.log(bookData);
 
+    // switch case for dropdown options. Convert data to string for localStorage
+    const addToLocalStorage = (key, bookData) => {
+        // Retrieve existing books for the selected status (change to json) & if nothing exists then enter empty array
+        let storedBooks = JSON.parse(localStorage.getItem(key)) || [];
 
+        // Check if the book already exists (to avoid duplicates)
+        if (!storedBooks.some(book => book.title === bookData.title)) {
 
-// add book to read
+            // Add new book to the array
+            storedBooks.push(bookData);
 
+            // Save the updated array back to local storage
+            localStorage.setItem(key, JSON.stringify(storedBooks));
+            }
+        }
 
+    const dropdownSubmitButton = document.querySelector('#dropdown-button-submit');
+    dropdownSubmitButton.addEventListener('click', () => {
+        switch (selectedOption) {
+            case 'want to read':
+                addToLocalStorage('want to read', bookData);
+                break;
+            
+            case 'currently reading':
+                addToLocalStorage('currently reading', bookData);
+                break;
+    
+            case 'read':
+                addToLocalStorage('read', bookData);
+                break;
+        
+            default:
+                const errorMessageContainer = document.querySelector('#message-container');
+                const errorMessage = document.createElement('span');
+                errorMessage.textContent = 'No valid option selected. Please try again';
+                errorMessageContainer.append(errorMessage);
+                break;
+        }
+    });
+});
 
 // finished book button to add book to read
 

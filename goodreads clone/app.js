@@ -18,6 +18,7 @@ const bookDescription = document.querySelector('#book-description'); // get book
 
 // Buttons
 const searchButton = document.querySelector('#search-button'); // button next to input bar 
+const form = document.querySelector('#search-form');
 const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
 const dropdown = document.querySelector('#reading-dropdown'); // dropdown options when user is on individual book
 
@@ -28,17 +29,13 @@ const modalBookCovers = document.querySelector('#modal-book-covers');
 // onload of application search localStorage for any existing entries in want to read
 const wantToReadContainer = document.querySelector('#want-to-read-container');
 
-// const retrieveLocalStorage = () => {
-//     if () {
-//         localStorage.get('want to read');
-//     }
-// }
+// EXTEND THE FOCUS OUTLINE ON THE SEARCH BAR FORM
 
 console.log(localStorage.getItem('want to read'));
 
 // console.log(Object.keys(localStorage));
 
-//search book - INPUT SEARCH/BUTTON - START
+//search book - INPUT SEARCH/BUTTON
 // get search bar
 const inputSearchBar = document.querySelector('#search-bar');
 
@@ -106,13 +103,16 @@ const toggleApp = () => {
     app.classList.remove('hidden');
 };
 
-
-
 const toggleIndividualBookModal = () => {
     individualBookModal.classList.remove('hidden')
 };
 
-searchButton.addEventListener('click', () => fetchApi(apiUrl));
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    inputSearchBar.value;
+    fetchApi(apiUrl+inputSearchBar.value)
+});
+// searchButton.addEventListener('click', () => fetchApi(apiUrl));
 
 // takes the book percentage calculation for how far through the book the user is and updates front end text content
 const updateBookPercentage = () => {

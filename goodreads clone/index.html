@@ -111,14 +111,20 @@
             
     <div class="mx-4"> <!-- main body in between header and footer - start -->
 
-      <div class="flex items-center relative w-full"> <!-- search bar/container start -->
-        <input type="text" 
-        placeholder="Search for a book"
-        class="w-full rounded-full bg-[#f1f1f1] py-[5px] px-[10px] flex-1 pl-10"
-        id="search-bar"
-        >
-        <span class="absolute left-3">&#x1F50D;</span> <!-- magnifying glass icon -->
-        <button id="search-button" class="bg-gray-400 rounded-s-none rounded-full absolute right-0 top-0 bottom-0 my-auto h-full px-4">Search</button>
+      <div> <!-- search bar/container start -->
+        <form id="search-form" class="flex items-center relative w-full">
+          <input type="text" 
+                placeholder="Search for a book"
+                class="w-full rounded-full bg-[#f1f1f1] py-[5px] px-[10px] flex-1 pl-10"
+                id="search-bar"
+                requ
+                >
+          <span class="absolute left-3">&#x1F50D;</span> <!-- magnifying glass icon -->
+          <input value="Search" 
+                type="submit"
+                id="search-button" 
+                class="bg-gray-400 rounded-s-none rounded-full absolute right-0 top-0 bottom-0 my-auto h-full px-4">
+        </form>
       </div> <!-- search bar/container finish -->
 
       <div class="mt-4"> <!-- reading: title in main body - start -->

@@ -1,6 +1,7 @@
 // import functions
 import { showSpinner, hideSpinner } from "./spinner";
 import { openModal, closeModal, overlay, modalDoneButton, modalCancelButton } from "./updateProgressModal";
+import { dropdownHander } from "./dropdownHandler";
 
 // import { updateBookPercentage, bookPageCount, pageNumberInput, percentage } from "./bookPercentage";
 // get app
@@ -24,10 +25,18 @@ const dropdown = document.querySelector('#reading-dropdown'); // dropdown option
 const individualBookModal = document.querySelector('#individual-book-modal');
 const modalBookCovers = document.querySelector('#modal-book-covers');
 
-// window.onload = () => {
-    // search local storage for existing books and display then,
-    // if no books exist, display with the messages 'add a book' in relevant sections
-// };
+// onload of application search localStorage for any existing entries in want to read
+const wantToReadContainer = document.querySelector('#want-to-read-container');
+
+// const retrieveLocalStorage = () => {
+//     if () {
+//         localStorage.get('want to read');
+//     }
+// }
+
+console.log(localStorage.getItem('want to read'));
+
+// console.log(Object.keys(localStorage));
 
 //search book - INPUT SEARCH/BUTTON - START
 // get search bar
@@ -151,74 +160,15 @@ overlay.addEventListener('click', closeModal);
 
 
 // add book to want to read
-dropdown.addEventListener('change', function() {
-    const selectedOption = this.value;
-
-// book data to be saved to localStorage
-    const bookData = {
-        title: bookTitle.textContent,
-        subtitle: bookSubTitle.textContent,
-        cover: bookCover.currentSrc,
-        description: bookDescription.textContent,
-        author: authorName.textContent.slice(3),
-        publisher: bookPublisher.textContent.slice(19),
-        rating: ratingAverage.textContent
-    };
-
-    // switch case for dropdown options. Convert data to string for localStorage
-    const addToLocalStorage = (key, bookData) => {
-        const errorMessageContainer = document.querySelector('#message-container');
-        errorMessageContainer.textContent = ''; // clears previous message
-
-        // Retrieve existing books for the selected status (change to json) & if nothing exists then enter empty array
-        let storedBooks = JSON.parse(localStorage.getItem(key)) || [];
-
-        // Check if the book already exists (to avoid duplicates)
-        if (!storedBooks.some(book => book.title === bookData.title)) {
-
-            // Add new book to the array
-            storedBooks.push(bookData);
-
-            // Save the updated array back to local storage
-            localStorage.setItem(key, JSON.stringify(storedBooks));
-            } else {
-                const errorMessage = document.createElement('span');
-                errorMessage.textContent = `Sorry ${bookData.title} already exists in ${key}.`
-                errorMessageContainer.append(errorMessage);
-            }
-        }
-        
-
-    const dropdownSubmitButton = document.querySelector('#dropdown-button-submit');
-    dropdownSubmitButton.addEventListener('click', () => {
-        const errorMessageContainer = document.querySelector('#message-container');
-        const errorMessage = document.createElement('span');
-        switch (selectedOption) {
-            case 'want to read':
-                console.log(localStorage.getItem(bookData));
-                // if book is already in localStorage send error, 'sorry book already exists'
-                    addToLocalStorage('want to read', bookData);
-                break;
-            
-            case 'currently reading':
-                // if book is already in localStorage send error, 'sorry book already exists'
-                addToLocalStorage('currently reading', bookData);
-                break;
-    
-            case 'read':
-                // if book is already in localStorage send error, 'sorry book already exists'
-                addToLocalStorage('read', bookData);
-                break;
-        
-            default:
-                // const errorMessageContainer = document.querySelector('#message-container');
-                // const errorMessage = document.createElement('span');
-                errorMessage.textContent = 'No valid option selected. Please try again';
-                errorMessageContainer.append(errorMessage);
-                break;
-        }
-    });
-});
+dropdownHander(dropdown, 
+    bookTitle,
+    bookSubTitle,
+    authorName,
+    bookCover,
+    bookDescription,
+    bookPublisher,
+    ratingAverage
+)
 
 // finished book button to add book to read
 

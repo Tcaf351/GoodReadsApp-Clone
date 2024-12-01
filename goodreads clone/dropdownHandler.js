@@ -12,7 +12,8 @@ export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bo
             description: bookDescription.textContent,
             author: authorName.textContent.slice(3),
             publisher: bookPublisher.textContent.slice(19),
-            rating: ratingAverage.textContent
+            rating: ratingAverage.textContent,
+            timestamp: Date.now()
         };
     
         // switch case for dropdown options. Convert data to string for localStorage

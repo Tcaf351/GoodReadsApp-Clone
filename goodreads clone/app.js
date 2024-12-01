@@ -31,30 +31,48 @@ const wantToReadContainer = document.querySelector('#want-to-read-container');
 
 // EXTEND THE FOCUS OUTLINE ON THE SEARCH BAR FORM
 
-console.log(localStorage.getItem('want to read'));
 
-// console.log(Object.keys(localStorage));
+// Check localStorage to see if there's any existing books
+const windowOnLoadLocalStorage = () => {
+    const categories = ['want to read', 'currently reading', 'read'];
+    const oneDay = 24 * 60 * 60 * 1000; // Represents 1 minute in milliseconds
+    const currentTime = Date.now();
+
+    categories.forEach(category => {
+        // Get stored books for each category
+        const storedBooks = JSON.parse(localStorage.getItem(category)) || [];
+
+        // Filter books that are less than 1 day old
+        const recentBooks = storedBooks.filter(book => {
+            return currentTime - book.timestamp < oneDay;
+        });
+
+        if (recentBooks.length > 0) {
+            // If there are recent books, log them to the console
+            recentBooks.forEach(book => {
+                console.log(`Category: ${category}, Book:`, book);
+            });
+
+            // Update localStorage with recent books only
+            localStorage.setItem(category, JSON.stringify(recentBooks));
+        } else {
+            // Remove the category if all books are older than 1 day
+            localStorage.removeItem(category);
+            console.log(`Category "${category}" removed from localStorage (all books expired).`);
+        }
+    });
+};
+
+// Run the function on window load
+window.onload = windowOnLoadLocalStorage;
+
+
+
+
 
 //search book - INPUT SEARCH/BUTTON
 // get search bar
 const inputSearchBar = document.querySelector('#search-bar');
-
-// set a global value
-let inputValue = '';
-
-const getValueOfInput = (e) => {
-    return inputValue = e.target.value.replace(/ /g, '+'); // Replace spaces with dashes
-};
-
-const getValueOfSearchButton = () => {
-    inputValue;
-};
-
-// add event listener to get the value
-inputSearchBar.addEventListener('input', getValueOfInput);
-
-// Get value on input
-searchButton.addEventListener('click', getValueOfSearchButton);
 
 // api
 const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=`;
@@ -64,7 +82,7 @@ const API_KEY = 'AIzaSyCOiprMZ6jnfmZ2HQuzI-n6XrwTJjeeyhs'
 const fetchApi = async (api) => {
     try {
         showSpinner(); // Show spinner when starting to fetch API
-        const response = await fetch(`${api}${inputValue}`);
+        const response = await fetch(`${api}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -171,6 +189,10 @@ dropdownHander(dropdown,
 )
 
 // finished book button to add book to read
+
+
+
+// console.log(Object.keys(localStorage));
 
 
 

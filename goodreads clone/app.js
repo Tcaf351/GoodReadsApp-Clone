@@ -153,7 +153,7 @@ calculatePercentageOfBookCompletion()
 
 
 
-// console.log(Object.keys(localStorage));
+// update code so that if there's no books in localstorage the maps in the localstoragehandler file still work.
 
 
 

@@ -65,11 +65,14 @@ export const windowOnLoadLocalStorageRead = (categories) => {
 export const windowOnLoadLocalStorageCurrentlyReading = (categories) => {
     // onload of application search localStorage for any existing entries in read
     const currentlyReadingContainerImage = document.querySelector('#currently-reading-container img');
-    const authorName = document.querySelector('#currently-reading-container .author-name')
+    const authorName = document.querySelector('#currently-reading-container .author-name');
+    const percentage = document.querySelector('#percentage');
 
     const currentlyReadingString = localStorage.getItem(categories[1]);
     const currentlyReadingParsed = JSON.parse(currentlyReadingString);
     console.log(currentlyReadingParsed);
+    const { percentageCompleted } = currentlyReadingParsed.at(-1);
+    percentage.textContent = percentageCompleted
 
     currentlyReadingParsed.map((currentlyReadingParse) => {
         currentlyReadingContainerImage.src = currentlyReadingParse.cover;

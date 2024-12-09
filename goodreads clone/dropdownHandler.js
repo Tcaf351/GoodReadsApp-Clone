@@ -14,7 +14,8 @@ export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bo
             publisher: bookPublisher.textContent.slice(19),
             rating: ratingAverage.textContent,
             timestamp: Date.now(),
-            pageCount: bookPageCount
+            pageCount: bookPageCount,
+            percentageCompleted: 0
         };
 
         console.log(bookData.pageCount);

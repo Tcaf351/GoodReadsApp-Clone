@@ -2,6 +2,8 @@
 import { showSpinner, hideSpinner } from "./spinner";
 import { openModal, closeModal, overlay, modalDoneButton, modalCancelButton } from "./updateProgressModal";
 import { dropdownHander } from "./dropdownHandler";
+import { windowOnLoadLocalStorage, windowOnLoadLocalStorageWantToRead, windowOnLoadLocalStorageRead, windowOnLoadLocalStorageCurrentlyReading } from "./localStorageHandler";
+import { calculatePercentageOfBookCompletion } from "./calculateBookPercentage";
 
 // import { updateBookPercentage, bookPageCount, pageNumberInput, percentage } from "./bookPercentage";
 // get app
@@ -15,9 +17,12 @@ const ratingAverage = document.querySelector('.rating-average'); // get average 
 const bookPublisher = document.querySelector('#publisher');
 const bookCover = document.querySelector('.book-cover'); // get book cover
 const bookDescription = document.querySelector('#book-description'); // get book description
+let bookPageCount; // gets page count of a book
+
+// Containers
+
 
 // Buttons
-const searchButton = document.querySelector('#search-button'); // button next to input bar 
 const form = document.querySelector('#search-form');
 const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
 const dropdown = document.querySelector('#reading-dropdown'); // dropdown options when user is on individual book
@@ -26,45 +31,17 @@ const dropdown = document.querySelector('#reading-dropdown'); // dropdown option
 const individualBookModal = document.querySelector('#individual-book-modal');
 const modalBookCovers = document.querySelector('#modal-book-covers');
 
-// onload of application search localStorage for any existing entries in want to read
-const wantToReadContainer = document.querySelector('#want-to-read-container');
+// Categories
+const categories = ['want to read', 'currently reading', 'read'];
 
 // EXTEND THE FOCUS OUTLINE ON THE SEARCH BAR FORM
 
 
-// Check localStorage to see if there's any existing books
-const windowOnLoadLocalStorage = () => {
-    const categories = ['want to read', 'currently reading', 'read'];
-    const oneDay = 24 * 60 * 60 * 1000; // Represents 1 minute in milliseconds
-    const currentTime = Date.now();
-
-    categories.forEach(category => {
-        // Get stored books for each category
-        const storedBooks = JSON.parse(localStorage.getItem(category)) || [];
-
-        // Filter books that are less than 1 day old
-        const recentBooks = storedBooks.filter(book => {
-            return currentTime - book.timestamp < oneDay;
-        });
-
-        if (recentBooks.length > 0) {
-            // If there are recent books, log them to the console
-            recentBooks.forEach(book => {
-                console.log(`Category: ${category}, Book:`, book);
-            });
-
-            // Update localStorage with recent books only
-            localStorage.setItem(category, JSON.stringify(recentBooks));
-        } else {
-            // Remove the category if all books are older than 1 day
-            localStorage.removeItem(category);
-            console.log(`Category "${category}" removed from localStorage (all books expired).`);
-        }
-    });
-};
-
-// Run the function on window load
-window.onload = windowOnLoadLocalStorage;
+// onLoad of application look in localStorage to see if any books are present that are under 1 day old.
+window.onload = windowOnLoadLocalStorage(categories);
+window.onload = windowOnLoadLocalStorageWantToRead(categories);
+window.onload = windowOnLoadLocalStorageRead(categories);
+window.onload = windowOnLoadLocalStorageCurrentlyReading(categories);
 
 
 
@@ -89,13 +66,14 @@ const fetchApi = async (api) => {
         } else {
             const apiResponse = await response.json();
             const data = apiResponse?.items[0].volumeInfo
-            // console.log(data);
+            console.log(data);
 
             const { title, subtitle, description, averageRating, pageCount, publisher } = data;
             const authors = data.authors[0];
             const bookImage = data?.imageLinks.thumbnail
 
             bookPageCount = pageCount;
+            console.log(bookPageCount);
             bookTitle.textContent = title;
             bookSubTitle.textContent = subtitle;
             authorName.textContent = `by ${authors}`;
@@ -116,6 +94,27 @@ const fetchApi = async (api) => {
     }
 };
 
+form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    inputSearchBar.value;
+    await fetchApi(apiUrl+inputSearchBar.value)
+
+    // waits for the api to finish being called before handling the dropdown data
+    dropdownHander(dropdown, 
+        bookTitle,
+        bookSubTitle,
+        authorName,
+        bookCover,
+        bookDescription,
+        bookPublisher,
+        ratingAverage,
+        bookPageCount
+    )
+});
+
+
+
+
 // removes hidden class from the app to show app
 const toggleApp = () => { 
     app.classList.remove('hidden');
@@ -125,37 +124,7 @@ const toggleIndividualBookModal = () => {
     individualBookModal.classList.remove('hidden')
 };
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    inputSearchBar.value;
-    fetchApi(apiUrl+inputSearchBar.value)
-});
-// searchButton.addEventListener('click', () => fetchApi(apiUrl));
 
-// takes the book percentage calculation for how far through the book the user is and updates front end text content
-const updateBookPercentage = () => {
-    percentage.textContent = userBookPercentage;
-}
-
-// get input where user enters the page they're up to
-const pageNumberInput = document.querySelector('#modal-user-page-number');
-const percentage = document.querySelector('#percentage');
-
-let bookPageCount = 0; // set an initial value for the book percentage to work off
-let userBookPercentage = 0;
-
-pageNumberInput.addEventListener('input', (e) => {
-    // get value of input
-    const inputValue = e.target.value;
-
-    // convert to a number
-    const numberValue = parseInt(inputValue);
-
-    // calculate percentage of way through book 
-    if (!isNaN(numberValue)) {
-        userBookPercentage = Math.floor((numberValue / bookPageCount) * 100);
-    }
-});
 
 // EVENT LISTENERS
 
@@ -164,7 +133,7 @@ updateProgressButton.addEventListener('click', openModal);
 
 // done button on modal closes and updates percentage
 modalDoneButton.addEventListener('click', closeModal);
-modalDoneButton.addEventListener('click', updateBookPercentage);
+// modalDoneButton.addEventListener('click', updateBookPercentage);
 
 // cancel button on modal closes model
 modalCancelButton.addEventListener('click', closeModal);
@@ -177,16 +146,8 @@ overlay.addEventListener('click', closeModal);
 
 
 
-// add book to want to read
-dropdownHander(dropdown, 
-    bookTitle,
-    bookSubTitle,
-    authorName,
-    bookCover,
-    bookDescription,
-    bookPublisher,
-    ratingAverage
-)
+// calculates percentage of way through the book, if === to 100 then it will add the book to the read category.
+calculatePercentageOfBookCompletion()
 
 // finished book button to add book to read
 
@@ -198,10 +159,3 @@ dropdownHander(dropdown,
 
 
 // if percentage of book == 100% add book to read
-
-
-
-// scan barcode of book to bring up modal
-
-
-// search book on your shelf input - will need to filter through read books

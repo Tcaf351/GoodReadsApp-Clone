@@ -1,6 +1,6 @@
 // Function to handle the dropdown with 'want to read', 'read', 'currently reading'
 
-export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bookCover, bookDescription, bookPublisher, ratingAverage) {
+export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bookCover, bookDescription, bookPublisher, ratingAverage, bookPageCount) {
     dropdown.addEventListener('change', function() {
         const selectedOption = this.value;
     
@@ -13,8 +13,11 @@ export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bo
             author: authorName.textContent.slice(3),
             publisher: bookPublisher.textContent.slice(19),
             rating: ratingAverage.textContent,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            pageCount: bookPageCount
         };
+
+        console.log(bookData.pageCount);
     
         // switch case for dropdown options. Convert data to string for localStorage
         const addToLocalStorage = (key, bookData) => {

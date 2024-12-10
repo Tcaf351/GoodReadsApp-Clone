@@ -128,32 +128,40 @@
           </div> <!-- reading: title in main body - finish -->
 
           
-          <div id="currently-reading-container" class="bg-gray-400 flex p-3 rounded-md"> <!-- currently reading: book details/progress - start -->
-              <div>
-                <img src="" alt="image of book" class="mr-4 rounded-md">
+          <div id="currently-reading-container" class="flex rounded-md relative overflow-hidden"> <!-- currently reading: book details/progress - start -->
+             <!-- <div v id="currently-reading-cover-glassmorphism">
+                <img src="" alt="background of container" class="absolute w-full -z-10">
               </div>
 
-              <div>
-                <h3 class="book-title"></h3>
-                <p class="text-xs mb-1">by <span class="author-name"></span></p>
+              <div id="currently-reading-book-cover">
+                <img src="" alt="image of book" class="mr-4 rounded-md z-30">
+              </div> -->
+              <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-600 bg-opacity-70 saturate-100 backdrop-contrast-100"></div>
+              <img id="currently-reading-cover-glassmorphism" class="absolute -z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
+              <img id="currently-reading-book-cover" class="m-4 rounded-md z-30" src="" alt="book cover">
 
-                <button id="update-progress-button" class="bg-[#E4E2D5] text-xs px-3 py-2 mb-2 rounded-md uppercase">Update Progress</button>
+
+              <div class="z-30 py-4">
+                <h3 class="book-title"></h3>
+                <p class="text-xs mb-1 text-gray-50">by <span class="author-name"></span></p>
+
+                <button id="update-progress-button" class="bg-[#E4E2D5] text-xs px-3 py-2 mb-2 rounded-md uppercase ">Update Progress</button>
 
                 <div class="flex pb-7">
-                  <p class="text-xs uppercase mr-3">progress:</p>
+                  <p class="text-xs uppercase mr-3 text-gray-50">progress:</p>
                   <div class="bg-gray-100 rounded-sm w-40"></div> <!-- progress bar -->
-                  <p class="text-xs ml-1"><span id="percentage">0</span>%</p> <!-- percentage of progress bar -->
+                  <p class="text-xs ml-1 text-gray-50"><span id="percentage">0</span>%</p> <!-- percentage of progress bar -->
                 </div>
               </div>
           </div> <!-- currently reading: book details/progress - finish -->
 
         <div id="want-to-read-and-read-container"> <!-- want to read/read containers - start -->
               <div id="want-to-read-container" class="flex mx-4 mt-6">  
-                  <div class="mr-3">
-                    <img src="" alt="book cover" class="shadow-md rounded-md"> <!-- make the most recent addition the cover -->
-                  </div>
+                <div class="mr-3">
+                  <img src="" alt="book cover" class="shadow-md rounded-md h-28"> <!-- make the most recent completed book the cover -->
+                </div>
 
-                  <div class="flex justify-center flex-col">
+                  <div class="flex justify-start  flex-col">
                     <h4>Want to Read</h4>
                     <p class="text-gray-400 text-xs"></p> <!-- make a dynamic number -->
                   </div>
@@ -163,10 +171,10 @@
 
               <div id="read-container" class="flex mx-4 mt-6">  
                 <div class="mr-3">
-                  <img src="" alt="book cover" class="shadow-md rounded-md"> <!-- make the most recent completed book the cover -->
+                  <img src="" alt="book cover" class="shadow-md rounded-md h-28"> <!-- make the most recent completed book the cover -->
                 </div>
 
-                <div class="flex justify-center flex-col">
+                <div class="flex justify-start flex-col">
                   <h4>Read</h4>
                   <p class="text-gray-400 text-xs"></p> <!-- make a dynamic number -->
                 </div>
@@ -174,6 +182,12 @@
             <hr>
 
         </div> <!-- want to read/read containers - finish-->
+
+  <!-- <div id="currently-reading-container" class="flex rounded-md relative overflow-hidden"> 
+          <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100"></div>
+          <img id="currently-reading-cover-glassmorphism" class="absolute -z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
+          <img id="currently-reading-book-cover" class="m-4 rounded-md z-30" src="" alt="book cover">
+       </div> -->
 
 
         </div> <!-- main body in between header and footer - finish -->
@@ -193,4 +207,3 @@
     </main>
   </body>
 </html>
-<!--  -->

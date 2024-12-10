@@ -37,14 +37,16 @@ export const windowOnLoadLocalStorageWantToRead = (categories) => {
     const wantToReadContainerImage = document.querySelector('#want-to-read-container img');
     const wantToReadText = document.querySelector('#want-to-read-container p');
 
+    console.log(wantToReadContainerImage);
+
     const wantToReadString = localStorage.getItem(categories[0]);
-    const wantToReadParsed = JSON.parse(wantToReadString);
+    const wantToReadParsed = JSON.parse(wantToReadString) || []; // if no books exist it will use an empty array
 
     //  map over want to read and display
-    // wantToReadParsed.map((wantToReadParse) => {
-    //     wantToReadContainerImage.src = wantToReadParse.cover;
-    // });
-    // wantToReadText.innerHTML = `${wantToReadParsed.length.toString()} books`;
+    wantToReadParsed.map((wantToReadParse) => {
+        wantToReadContainerImage.src = wantToReadParse.cover;
+    });
+    wantToReadText.innerHTML = `${wantToReadParsed.length.toString()} books`;
 }
 
 export const windowOnLoadLocalStorageRead = (categories) => {
@@ -52,19 +54,21 @@ export const windowOnLoadLocalStorageRead = (categories) => {
     const readContainerImage = document.querySelector('#read-container img');
     const readText = document.querySelector('#read-container p');
 
+
     const readString = localStorage.getItem(categories[2]);
-    const readParsed = JSON.parse(readString);
+    const readParsed = JSON.parse(readString) || []; // if no books exist it will use an empty array
 
     // map over read and display
-    // readParsed.map((readParse) => {
-    //     readContainerImage.src = readParse.cover;
-    // });
-    // readText.innerHTML = `${readParsed.length.toString()} books`;
+    readParsed.map((readParse) => {
+        readContainerImage.src = readParse.cover;
+    });
+    readText.innerHTML = `${readParsed.length.toString()} books`;
 }
 
 export const windowOnLoadLocalStorageCurrentlyReading = (categories) => {
     // onload of application search localStorage for any existing entries in read
-    const currentlyReadingContainerImage = document.querySelector('#currently-reading-container img');
+    const currentlyReadingBookAsBackground = document.querySelector('#currently-reading-cover-glassmorphism');
+    const currentlyReadingBookCover = document.querySelector('#currently-reading-book-cover');
     const authorName = document.querySelector('#currently-reading-container .author-name');
     const percentage = document.querySelector('#percentage');
 
@@ -75,10 +79,8 @@ export const windowOnLoadLocalStorageCurrentlyReading = (categories) => {
     percentage.textContent = percentageCompleted
 
     currentlyReadingParsed.map((currentlyReadingParse) => {
-        currentlyReadingContainerImage.src = currentlyReadingParse.cover;
+        currentlyReadingBookCover.src = currentlyReadingParse.cover;
+        currentlyReadingBookAsBackground.src = currentlyReadingParse.cover;
         authorName.innerHTML = currentlyReadingParse.author;
     });
 }
-
-
-// the pageCount is getting overridden by the dropdownhander

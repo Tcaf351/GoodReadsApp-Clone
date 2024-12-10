@@ -84,6 +84,38 @@ const fetchApi = async (api) => {
 
             modalBookCovers.children[0].src = bookImage;
             modalBookCovers.children[1].src = bookImage;
+
+            // set a limit for bookDescription if over 50 characters
+            if (description.length > 200) {
+                const shortenedDescription = description.slice(0, 200) + '...';
+                let isShortened = true;
+
+                const updateDescription = () => {
+                    bookDescription.textContent = isShortened ? shortenedDescription : description;
+
+                    // Append the toggle link to the description
+                    bookDescription.appendChild(toggleLink);
+                };
+
+                // Create the Read More/Read Less link
+                const toggleLink = document.createElement('a');
+                toggleLink.textContent = 'Read More';
+                toggleLink.href = '#';
+                toggleLink.className = 'text-gray-900 hover:text-gray-300 ml-2';
+
+                // Add toggle functionality
+                toggleLink.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent navigation
+                    isShortened = !isShortened; // Toggle the state
+                    toggleLink.textContent = isShortened ? 'Read More' : 'Read Less'; // Update link text
+                    updateDescription(); // Update the description
+                });
+
+                // Set initial description and append the link
+                updateDescription();
+            } else {
+                bookDescription.textContent = description;
+            }
         }
     } catch (error) {
         console.error('Error fetching API:', error);

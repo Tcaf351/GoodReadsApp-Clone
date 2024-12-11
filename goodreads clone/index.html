@@ -5,7 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Good Reads Clone</title>
-    <meta name="description" content="GoodReads Clone">
     <link rel="stylesheet" href="./index.css">
   </head>
 
@@ -42,7 +41,6 @@
         <section id="individual-book-modal" class="hidden flex flex-col items-center justify-center border-solid border-2 border-red-500">
 
           <div class="relative w-full h-2/5">
-
             <div id="modal-book-covers" class="relative h-full flex items-center justify-center">
               <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100"></div>
 
@@ -60,11 +58,8 @@
             <p class="author-name text-sm text-center"></p>
 
             <hr class="mt-4 w-[96%] mx-auto">
-            <div class="flex items-center justify-between">
-              <ul class="px-3">
-                <span class="text-xs">5 stars</span>
-                <span class="rating-average text-xs"></span>
-              </ul>
+            <div class="flex items-center justify-center">
+              
 
               <ul class="px-3">
                 <span id="publisher" class="text-xs"></span>
@@ -88,9 +83,6 @@
             </div>
             <div> <!-- book description -->
                 <p id="book-description" class="px-3 text-center"></p>
-                <!-- will need to set a character limit and implement a read more button -->
-
-
             </div>
           </div>
         </section>
@@ -156,38 +148,36 @@
           </div> <!-- currently reading: book details/progress - finish -->
 
         <div id="want-to-read-and-read-container"> <!-- want to read/read containers - start -->
-              <div id="want-to-read-container" class="flex mx-4 mt-6">  
-                <div class="mr-3">
-                  <img src="" alt="book cover" class="shadow-md rounded-md h-28"> <!-- make the most recent completed book the cover -->
-                </div>
-
-                  <div class="flex justify-start  flex-col">
-                    <h4>Want to Read</h4>
-                    <p class="text-gray-400 text-xs"></p> <!-- make a dynamic number -->
+              <a href="/wantToRead">
+                <div id="want-to-read-container" class="flex mx-4 mt-6">  
+                  <div class="mr-3">
+                    <img src="" alt="book cover" class="shadow-md rounded-md h-28"> <!-- make the most recent completed book the cover -->
                   </div>
-              </div> 
+  
+                    <div class="flex justify-start  flex-col">
+                      <h4>Want to Read</h4>
+                      <p class="text-gray-400 text-xs"></p> <!-- make a dynamic number -->
+                    </div>
+                </div>
+              </a> 
               <hr>
 
 
-              <div id="read-container" class="flex mx-4 mt-6">  
-                <div class="mr-3">
-                  <img src="" alt="book cover" class="shadow-md rounded-md h-28"> <!-- make the most recent completed book the cover -->
-                </div>
-
-                <div class="flex justify-start flex-col">
-                  <h4>Read</h4>
-                  <p class="text-gray-400 text-xs"></p> <!-- make a dynamic number -->
-                </div>
-            </div> 
+              <a href="/read">
+                <div id="read-container" class="flex mx-4 mt-6">  
+                  <div class="mr-3">
+                    <img src="" alt="book cover" class="shadow-md rounded-md h-28"> <!-- make the most recent completed book the cover -->
+                  </div>
+  
+                  <div class="flex justify-start flex-col">
+                    <h4>Read</h4>
+                    <p class="text-gray-400 text-xs"></p> <!-- make a dynamic number -->
+                  </div>
+              </div>
+              </a> 
             <hr>
 
         </div> <!-- want to read/read containers - finish-->
-
-  <!-- <div id="currently-reading-container" class="flex rounded-md relative overflow-hidden"> 
-          <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100"></div>
-          <img id="currently-reading-cover-glassmorphism" class="absolute -z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
-          <img id="currently-reading-book-cover" class="m-4 rounded-md z-30" src="" alt="book cover">
-       </div> -->
 
 
         </div> <!-- main body in between header and footer - finish -->
@@ -202,7 +192,7 @@
             <span class="text-xs">My Books</span>
           </div>
         </footer>
-        <script type="module" src="/app.js"></script>
+        <script type="module" src="/src/app.js"></script>
       </div>
     </main>
   </body>

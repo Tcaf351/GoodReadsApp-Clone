@@ -13,7 +13,6 @@ export const app = document.querySelector('#app');
 const bookTitle = document.querySelector('.book-title'); // get book's title
 const bookSubTitle = document.querySelector('.book-subtitle'); // get book's subtitle
 const authorName = document.querySelector('.author-name'); // get authors name
-const ratingAverage = document.querySelector('.rating-average'); // get average rating
 const bookPublisher = document.querySelector('#publisher');
 const bookCover = document.querySelector('.book-cover'); // get book cover
 const bookDescription = document.querySelector('#book-description'); // get book description
@@ -78,7 +77,6 @@ const fetchApi = async (api) => {
             bookSubTitle.textContent = subtitle;
             authorName.textContent = `by ${authors}`;
             bookCover.src = bookImage;
-            ratingAverage.textContent = averageRating;
             bookDescription.textContent = description;
             bookPublisher.textContent = `book published by: ${publisher}`;
 
@@ -139,7 +137,6 @@ form.addEventListener('submit', async (e) => {
         bookCover,
         bookDescription,
         bookPublisher,
-        ratingAverage,
         bookPageCount
     )
 });

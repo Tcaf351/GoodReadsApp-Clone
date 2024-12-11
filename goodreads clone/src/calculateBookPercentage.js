@@ -15,7 +15,7 @@ export const calculatePercentageOfBookCompletion = () => {
     const latestBook = parsedWantToReadCategory.at(-1);
 
     // grab the page count/number of pages
-    const { pageCount } = latestBook;
+    const { pageCount } = latestBook || { pageCount: 0 };
     let percentageForCompletionOfBook = 0;
     
 

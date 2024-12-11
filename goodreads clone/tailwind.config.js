@@ -2,6 +2,8 @@
 export default {
   content: [
     "./index.html",
+    "./wantToRead.html",
+    "./read.html",
     "./**/*.{js,jsx}",
   ],
   theme: {

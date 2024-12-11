@@ -15,11 +15,6 @@ export const windowOnLoadLocalStorage = (categories) => {
         });
 
         if (recentBooks.length > 0) {
-            // If there are recent books, log them to the console - console.log to delete later
-            // recentBooks.forEach(book => {
-            //     console.log(`Category: ${category}, Book:`, book);
-            // });
-
             // Update localStorage with recent books only
             localStorage.setItem(category, JSON.stringify(recentBooks));
         } else {
@@ -36,9 +31,6 @@ export const windowOnLoadLocalStorageWantToRead = (categories) => {
     // onload of application search localStorage for any existing entries in want to read
     const wantToReadContainerImage = document.querySelector('#want-to-read-container img');
     const wantToReadText = document.querySelector('#want-to-read-container p');
-
-    console.log(wantToReadContainerImage);
-
     const wantToReadString = localStorage.getItem(categories[0]);
     const wantToReadParsed = JSON.parse(wantToReadString) || []; // if no books exist it will use an empty array
 
@@ -73,9 +65,8 @@ export const windowOnLoadLocalStorageCurrentlyReading = (categories) => {
     const percentage = document.querySelector('#percentage');
 
     const currentlyReadingString = localStorage.getItem(categories[1]);
-    const currentlyReadingParsed = JSON.parse(currentlyReadingString);
-    console.log(currentlyReadingParsed);
-    const { percentageCompleted } = currentlyReadingParsed.at(-1);
+    const currentlyReadingParsed = JSON.parse(currentlyReadingString) || [];
+    const { percentageCompleted } = currentlyReadingParsed.at(-1) || { percentageCompleted: 0 };
     percentage.textContent = percentageCompleted
 
     currentlyReadingParsed.map((currentlyReadingParse) => {

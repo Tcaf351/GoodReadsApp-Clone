@@ -52,7 +52,7 @@
           </div>
         
 
-          <div class="h-full w-full border-2 border-green-500">
+          <div class="h-full w-full">
             <h1 class="book-title text-xl text-center mt-2"></h1>
             <h3 class="book-subtitle text-md text-center"></h3>
             <p class="author-name text-sm text-center"></p>
@@ -67,20 +67,18 @@
             </div>
             <hr class="w-[96%] mx-auto">
 
-            <div class="flex justify-center">
-              <select name="reading" id="reading-dropdown" class="radius">
+            <div class="flex justify-center flex-col my-2 w-1/2 mx-auto">
+              <select name="reading" id="reading-dropdown" class="radius my-4 py-1 px-2 rounded-md bg-gray-300 hover:bg-gray-400 transition-colors ease-linear">
                 <option value="select">Select</option>
                 <option value="want to read">Want to Read</option>
                 <option value="currently reading">Currently Reading</option>
                 <option value="read">Read</option>
               </select>
               <div id="message-container"></div>
+              <button id="dropdown-button-submit" class="py-1 px-2 mb-4 rounded-md bg-gray-300 hover:bg-gray-400 transition-colors ease-linear">Submit</button>
             </div>
-            <button id="dropdown-button-submit" class="w-full mx-auto">Submit</button>
             <!-- user chooses how many stars section -->
-            <div class="mt-4 mb-2">
-              <p class="text-center">Rate this book:</p>
-            </div>
+            
             <div> <!-- book description -->
                 <p id="book-description" class="px-3 text-center"></p>
             </div>
@@ -88,7 +86,7 @@
         </section>
         <!-- modal (book details) - finish -->
 
-      <div id="app" class="">
+      <div id="app">
         
         <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4 mt-10"> 
             <div class="absolute left-1/2 transform -translate-x-1/2">

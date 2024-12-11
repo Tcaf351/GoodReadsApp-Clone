@@ -5,7 +5,6 @@ import { dropdownHander } from "./dropdownHandler";
 import { windowOnLoadLocalStorage, windowOnLoadLocalStorageWantToRead, windowOnLoadLocalStorageRead, windowOnLoadLocalStorageCurrentlyReading } from "./localStorageHandler";
 import { calculatePercentageOfBookCompletion } from "./calculateBookPercentage";
 
-// import { updateBookPercentage, bookPageCount, pageNumberInput, percentage } from "./bookPercentage";
 // get app
 export const app = document.querySelector('#app');
 
@@ -33,18 +32,12 @@ const modalBookCovers = document.querySelector('#modal-book-covers');
 // Categories
 const categories = ['want to read', 'currently reading', 'read'];
 
-// EXTEND THE FOCUS OUTLINE ON THE SEARCH BAR FORM
-
 
 // onLoad of application look in localStorage to see if any books are present that are under 1 day old.
 window.onload = windowOnLoadLocalStorage(categories);
 window.onload = windowOnLoadLocalStorageWantToRead(categories);
 window.onload = windowOnLoadLocalStorageRead(categories);
 window.onload = windowOnLoadLocalStorageCurrentlyReading(categories);
-
-
-
-
 
 //search book - INPUT SEARCH/BUTTON
 // get search bar
@@ -119,17 +112,17 @@ const fetchApi = async (api) => {
         console.error('Error fetching API:', error);
     } finally {
         hideSpinner(); // Hide spinner after fetch is complete
-        // toggleApp(); // show app
+        toggleApp(); // show app
         toggleIndividualBookModal()
     }
 };
 
 form.addEventListener('submit', async (e) => {
-    e.preventDefault()
-    inputSearchBar.value;
-    await fetchApi(apiUrl+inputSearchBar.value)
+    e.preventDefault();  // Prevent default form submission
+    const searchQuery = inputSearchBar.value;  // Get value from the input search bar
+    await fetchApi(apiUrl + searchQuery); // Wait for fetchApi to complete
 
-    // waits for the api to finish being called before handling the dropdown data
+    // Ensure dropdownHandler is called after the API response is processed
     dropdownHander(dropdown, 
         bookTitle,
         bookSubTitle,
@@ -137,10 +130,9 @@ form.addEventListener('submit', async (e) => {
         bookCover,
         bookDescription,
         bookPublisher,
-        bookPageCount
-    )
+        bookPageCount    // Now bookPageCount should be properly set
+    );
 });
-
 
 
 
@@ -152,7 +144,6 @@ const toggleApp = () => {
 const toggleIndividualBookModal = () => {
     individualBookModal.classList.remove('hidden')
 };
-
 
 
 // EVENT LISTENERS
@@ -170,21 +161,5 @@ modalCancelButton.addEventListener('click', closeModal);
 // close modal when user clicks outside of modal container
 overlay.addEventListener('click', closeModal);
 
-// Functionality for percntage update when clicking on the 'done' button on modal
-
-
-
-
 // calculates percentage of way through the book, if === to 100 then it will add the book to the read category.
 calculatePercentageOfBookCompletion()
-
-// finished book button to add book to read
-
-
-
-// update code so that if there's no books in localstorage the maps in the localstoragehandler file still work.
-
-
-
-
-// if percentage of book == 100% add book to read

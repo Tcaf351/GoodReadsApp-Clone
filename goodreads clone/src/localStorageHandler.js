@@ -39,6 +39,10 @@ export const windowOnLoadLocalStorageWantToRead = (categories) => {
         wantToReadContainerImage.src = wantToReadParse.cover;
     });
     wantToReadText.innerHTML = `${wantToReadParsed.length.toString()} books`;
+
+    if (wantToReadParsed.length === 0) {
+        wantToReadContainerImage.parentNode.removeChild(wantToReadContainerImage);
+    }
 }
 
 export const windowOnLoadLocalStorageRead = (categories) => {
@@ -55,6 +59,10 @@ export const windowOnLoadLocalStorageRead = (categories) => {
         readContainerImage.src = readParse.cover;
     });
     readText.innerHTML = `${readParsed.length.toString()} books`;
+
+    if (readParsed.length === 0) {
+        readContainerImage.parentNode.removeChild(readContainerImage);
+    }
 }
 
 export const windowOnLoadLocalStorageCurrentlyReading = (categories) => {

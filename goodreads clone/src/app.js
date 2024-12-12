@@ -17,9 +17,6 @@ const bookCover = document.querySelector('.book-cover'); // get book cover
 const bookDescription = document.querySelector('#book-description'); // get book description
 let bookPageCount; // gets page count of a book
 
-// Containers
-
-
 // Buttons
 const form = document.querySelector('#search-form');
 const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
@@ -31,7 +28,6 @@ const modalBookCovers = document.querySelector('#modal-book-covers');
 
 // Categories
 const categories = ['want to read', 'currently reading', 'read'];
-
 
 // onLoad of application look in localStorage to see if any books are present that are under 1 day old.
 window.onload = windowOnLoadLocalStorage(categories);
@@ -45,8 +41,6 @@ const inputSearchBar = document.querySelector('#search-bar');
 
 // api
 const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=`;
-const API_KEY = 'AIzaSyCOiprMZ6jnfmZ2HQuzI-n6XrwTJjeeyhs'
-
 
 const fetchApi = async (api) => {
     try {
@@ -109,7 +103,11 @@ const fetchApi = async (api) => {
             }
         }
     } catch (error) {
-        console.error('Error fetching API:', error);
+        const messageContainer = document.querySelector('#message-container');
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = "Sorry, we can't find that book. Please try another one"
+        messageContainer.append(errorMessage);
+
     } finally {
         hideSpinner(); // Hide spinner after fetch is complete
         toggleApp(); // show app
@@ -134,17 +132,14 @@ form.addEventListener('submit', async (e) => {
     );
 });
 
-
-
-// removes hidden class from the app to show app
+// toggles the hidden class from the #app
 const toggleApp = () => { 
-    app.classList.remove('hidden');
+    app.classList.toggle('hidden');
 };
 
 const toggleIndividualBookModal = () => {
     individualBookModal.classList.remove('hidden')
 };
-
 
 // EVENT LISTENERS
 

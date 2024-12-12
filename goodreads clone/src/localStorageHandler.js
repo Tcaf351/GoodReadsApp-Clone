@@ -20,7 +20,6 @@ export const windowOnLoadLocalStorage = (categories) => {
         } else {
             // Remove the category if all books are older than 1 day
             localStorage.removeItem(category);
-            console.log(`Category "${category}" removed from localStorage (all books expired).`);
         }
     });
 };
@@ -69,6 +68,7 @@ export const windowOnLoadLocalStorageCurrentlyReading = (categories) => {
     // onload of application search localStorage for any existing entries in read
     const currentlyReadingBookAsBackground = document.querySelector('#currently-reading-cover-glassmorphism');
     const currentlyReadingBookCover = document.querySelector('#currently-reading-book-cover');
+    const currentlyReadingContainer = document.querySelector('#currently-reading-container');
     const authorName = document.querySelector('#currently-reading-container .author-name');
     const percentage = document.querySelector('#percentage');
 
@@ -82,4 +82,8 @@ export const windowOnLoadLocalStorageCurrentlyReading = (categories) => {
         currentlyReadingBookAsBackground.src = currentlyReadingParse.cover;
         authorName.innerHTML = currentlyReadingParse.author;
     });
+
+    if (currentlyReadingParsed.length === 0) {
+        currentlyReadingContainer.classList.add('hidden');
+    }
 }

@@ -6,13 +6,11 @@ export const calculatePercentageOfBookCompletion = () => {
     const pageNumberInput = document.querySelector('#modal-user-page-number');
     const percentage = document.querySelector('#percentage');
     const doneButton = document.querySelector('#update-progress-modal-done-button');
-
     const currentlyReadingCategory = localStorage.getItem("currently reading");
 
     // Get the last/latest item in the array
     const parsedCurrentlyReadingCategory = JSON.parse(currentlyReadingCategory) || [];
     const latestBook = parsedCurrentlyReadingCategory.at(-1);
-    console.log(latestBook);
 
     // Grab the page count/number of pages
     const { pageCount } = latestBook || { pageCount: 0 };
@@ -30,8 +28,6 @@ export const calculatePercentageOfBookCompletion = () => {
         } else {
             percentageForCompletionOfBook = 0;
         }
-
-        console.log(percentageForCompletionOfBook);
     });
 
     doneButton.addEventListener('click', () => {
@@ -43,6 +39,7 @@ export const calculatePercentageOfBookCompletion = () => {
             if (percentageForCompletionOfBook === 100) {
                 // Remove the book from "currently reading"
                 parsedCurrentlyReadingCategory.pop(); // Remove the last book
+                location.reload();
 
                 // Get the "read" category data or set it to an empty array if not yet in localStorage
                 const readCategory = JSON.parse(localStorage.getItem("read")) || [];

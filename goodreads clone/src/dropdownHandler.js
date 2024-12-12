@@ -42,12 +42,15 @@ export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bo
             switch (selectedOption) {
                 case 'want to read':
                     addToLocalStorage('want to read', bookData);
+                    location.reload();
                     break;
                 case 'currently reading':
                     addToLocalStorage('currently reading', bookData);
+                    location.reload();
                     break;
                 case 'read':
                     addToLocalStorage('read', bookData);
+                    location.reload();
                     break;
                 default:
                     errorMessage.textContent = 'No valid option selected. Please try again';

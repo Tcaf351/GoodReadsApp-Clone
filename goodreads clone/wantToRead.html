@@ -6,12 +6,32 @@
     <title>Want To Read Books</title>
     <link rel="stylesheet" href="./index.css">
 </head>
-<body>
-    <main>
-        <section id="individual-want-to-read-book">
-        
-        </section>
-    </main>
-    <script src="/src/pages/wantToRead.js"></script>
+<body class="bg-gradient-to-br from-gray-300 to-sky-200 bg-no-repeat h-screen overflow-hidden">
+    <div class="relative sm:max-w-lg mx-auto mt-4 min-h-[60vh] bg-gray-50 rounded-md shadow-lg">
+        <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4 rounded-t-md"> 
+          <div id="back-arrow" class="absolute left-4 hover:cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          </div>
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+              <h1 class="text-md text-gray-900">My Books</h1>
+            </div>
+        </nav>
+        <main class="min-h-[75vh]">
+          <section id="individual-want-to-read-book" class="max-h-[75vh] overflow-auto">
+          <!-- dynamic javascript map goes here -->
+          </section>
+      </main>
+        <footer class="flex items-start justify-center bg-[#E4E2D5] h-16 rounded-b-md">
+            <div class="border-solid border-t-2  border-gray-900 py-2 px-4 text-center w-24">
+              <img 
+                src="./img/bookmark-white.png" 
+                alt="book unicode" 
+                class="mx-auto h-6">
+              <span class="text-xs">My Books</span>
+            </div>
+          </footer>
+    </div>
+    <script type="module" src="/src/pages/wantToRead.js"></script>
 </body>
 </html>

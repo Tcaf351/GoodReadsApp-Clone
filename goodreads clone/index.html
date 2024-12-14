@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="./index.css">
   </head>
 
-  <body>
-    <main class="relative lg:max-w-screen-sm m-auto">
+  <body class="bg-gradient-to-br from-gray-300 to-sky-200 bg-no-repeat h-screen overflow-hidden">
+    <main class="relative sm:max-w-lg mx-auto mt-4">
             <!-- spinner - start -->
         <div class="loader flex justify-center items-center h-screen w-full hidden">
             <div class=" w-12 h-12 border-4 border-white border-b-red-500 rounded-full animate-rotation"></div>
@@ -17,20 +17,22 @@
         <!-- spinner-finish -->
 
         <!-- modal (Update progress) - start -->
-        <section class="modal hidden bg-gray-300 rounded-md px-4 py-5 h-1/3 absolute z-20 flex flex-col justify-center w-4/5"> <!-- modal container --> <!--  -->
-            <nav class="flex justify-between"> <!-- nav section of modal -->
-              <button class="cancel-button">Cancel</button>
-              <li class="list-none">Progress</li>
-              <button id="update-progress-modal-done-button">Done</button>
-            </nav>
-
-            <div class="flex justify-center"> <!-- page count section of modal -->
-              <span>I'm on page</span>
-              <input id="modal-user-page-number" type="text" name="page number" class="border-2 border-red-500 mx-1"> <!-- user enters page number -->
-            </div>
-
-            <div class="flex items-center justify-center"> <!-- book count section of modal -->
-              <img src="" alt="book cover"> <!-- shows cover of book -->
+        <section class="hidden modal px-4 py-5 h-1/3 z-40 absolute w-full m-auto"> <!-- modal container --> <!--  -->
+            <div class=" h-full w-full bg-gray-300 rounded-md">
+                <nav class="flex justify-between mb-10"> <!-- nav section of modal -->
+                <button class="cancel-button">Cancel</button>
+                <li class="list-none">Progress</li>
+                <button id="update-progress-modal-done-button">Done</button>
+              </nav>
+  
+              <div class="flex justify-center items-center"> <!-- page count section of modal -->
+                <span>I'm on page</span>
+                <input id="modal-user-page-number" type="text" name="page number" class="border-2 border-red-500 mx-1"> <!-- user enters page number -->
+              </div>
+  
+              <div class="flex items-center justify-center"> <!-- book count section of modal -->
+                <img src="" alt="book cover"> <!-- shows cover of book -->
+              </div>
             </div>
         </section>
 
@@ -38,13 +40,13 @@
         <!-- modal (Update progress) - finish -->
 
         <!-- modal (book details) - start -->
-        <section id="individual-book-modal" class="hidden flex flex-col items-center justify-center border-solid border-2 border-red-500">
+        <section id="individual-book-modal" class="hidden flex flex-col items-center justify-center bg-gray-50 rounded-md shadow-lg">
 
           <div class="relative w-full h-2/5">
             <div id="modal-book-covers" class="relative h-full flex items-center justify-center">
-              <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100"></div>
+              <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100 rounded-t-md"></div>
 
-              <img class="absolute z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
+              <img class="absolute z-10 h-full w-full bg-no-repeat bg-cover rounded-t-md" src="" alt="blurred book cover behind main book cover">
             
           
               <img class="book-cover relative inset-0 z-30 bg-no-repeat bg-cover py-3" src="" alt="book cover">
@@ -79,26 +81,30 @@
             </div>
             <!-- user chooses how many stars section -->
             
-            <div> <!-- book description -->
-                <p id="book-description" class="px-3 text-center"></p>
+            <div class="min-h-[25vh] overflow-auto"> <!-- book description -->
+                <p id="book-description" class="px-3 text-center max-h-[25vh]"></p>
             </div>
           </div>
         </section>
         <!-- modal (book details) - finish -->
 
-      <div id="app">
+      <div id="app" class="bg-gray-50 rounded-md shadow-lg">
         
-        <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4 mt-10"> 
+        <nav class="bg-[#E4E2D5] h-12 flex items-center relative rounded-t-md"> 
+          <div id="back-arrow" class="absolute left-4 hover:cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          </div>
             <div class="absolute left-1/2 transform -translate-x-1/2">
               <h1 class="text-md text-gray-900">My Books</h1>
             </div>
         </nav>
                 
                 
-        <div class="mx-4"> <!-- main body in between header and footer - start -->
+        <div class="mx-4 min-h-[75vh]"> <!-- main body in between header and footer - start -->
 
           <div> <!-- search bar/container start -->
-            <form id="search-form" class="flex items-center relative w-full mt-2">
+            <form id="search-form" class="flex items-center relative w-full top-2">
               <input type="text" 
                     placeholder="Search for a book"
                     class="w-full rounded-full bg-[#f1f1f1] py-[5px] px-[10px] flex-1 pl-10"
@@ -113,21 +119,15 @@
             </form>
           </div> <!-- search bar/container finish -->
 
-          <div class="mt-4"> <!-- reading: title in main body - start -->
+          <div class="mt-6"> <!-- reading: title in main body - start -->
             <p class="uppercase text-xs pb-2">Reading:</p>
           </div> <!-- reading: title in main body - finish -->
 
           
-          <div id="currently-reading-container" class="flex rounded-md relative overflow-hidden"> <!-- currently reading: book details/progress - start -->
-             <!-- <div v id="currently-reading-cover-glassmorphism">
-                <img src="" alt="background of container" class="absolute w-full -z-10">
-              </div>
+          <div id="currently-reading-container" class="flex rounded-md relative overflow-hidden max-h-[25vh]"> <!-- currently reading: book details/progress - start -->
 
-              <div id="currently-reading-book-cover">
-                <img src="" alt="image of book" class="mr-4 rounded-md z-30">
-              </div> -->
-              <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-600 bg-opacity-70 saturate-100 backdrop-contrast-100"></div>
-              <img id="currently-reading-cover-glassmorphism" class="absolute -z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
+              <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-600 bg-opacity-60 saturate-100 backdrop-contrast-100"></div>
+              <img id="currently-reading-cover-glassmorphism" class="absolute z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
               <img id="currently-reading-book-cover" class="m-4 rounded-md z-30" src="" alt="book cover">
 
 
@@ -139,7 +139,6 @@
 
                 <div class="flex pb-7">
                   <p class="text-xs uppercase mr-3 text-gray-50">progress:</p>
-                  <div class="bg-gray-100 rounded-sm w-40"></div> <!-- progress bar -->
                   <p class="text-xs ml-1 text-gray-50"><span id="percentage">0</span>%</p> <!-- percentage of progress bar -->
                 </div>
               </div>
@@ -177,11 +176,10 @@
 
         </div> <!-- want to read/read containers - finish-->
 
-
-        </div> <!-- main body in between header and footer - finish -->
+      </div> <!-- main body in between header and footer - finish -->
         
 
-        <footer class="flex items-start justify-center bg-[#E4E2D5] h-16 mt-8">
+        <footer class="flex items-start justify-center bg-[#E4E2D5] h-16 rounded-b-md">
           <div class="border-solid border-t-2  border-gray-900 py-2 px-4 text-center w-24">
             <img 
               src="./img/bookmark-white.png" 

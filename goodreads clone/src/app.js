@@ -4,6 +4,7 @@ import { openModal, closeModal, overlay, modalDoneButton, modalCancelButton } fr
 import { dropdownHander } from "./dropdownHandler";
 import { windowOnLoadLocalStorage, windowOnLoadLocalStorageWantToRead, windowOnLoadLocalStorageRead, windowOnLoadLocalStorageCurrentlyReading } from "./localStorageHandler";
 import { calculatePercentageOfBookCompletion } from "./calculateBookPercentage";
+import { getUrl } from './backArrow';
 
 // get app
 export const app = document.querySelector('#app');
@@ -21,6 +22,7 @@ let bookPageCount; // gets page count of a book
 const form = document.querySelector('#search-form');
 const updateProgressButton = document.querySelector('#update-progress-button'); // get update progress button to open modal
 const dropdown = document.querySelector('#reading-dropdown'); // dropdown options when user is on individual book
+getUrl()
 
 // Modals
 const individualBookModal = document.querySelector('#individual-book-modal');
@@ -54,7 +56,7 @@ const fetchApi = async (api) => {
             const data = apiResponse?.items[0].volumeInfo
             console.log(data);
 
-            const { title, subtitle, description, averageRating, pageCount, publisher } = data;
+            const { title, subtitle, description, pageCount, publisher } = data;
             const authors = data.authors[0];
             const bookImage = data?.imageLinks.thumbnail
 

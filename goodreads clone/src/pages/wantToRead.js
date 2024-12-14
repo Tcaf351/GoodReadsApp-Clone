@@ -1,3 +1,7 @@
+// import back arrow
+import { getUrl } from "../backArrow";
+getUrl();
+
 // in the wantToRead html file
 const wantToReadBookContainer = document.querySelector('#individual-want-to-read-book');
 
@@ -6,7 +10,7 @@ const wantToReadString = localStorage.getItem('want to read');
 const wantToReadParsed = JSON.parse(wantToReadString) || [];
 
 // map over localStorage
-const wantToReadBooks = wantToReadParsed.map((wantToReadParse) => {
+wantToReadParsed.map((wantToReadParse) => {
     // Create a div element and use innerHTML
     const dynamicBookDiv = document.createElement('div'); 
     dynamicBookDiv.classList.add('lg:w-1/2', 'lg:mx-auto', 'flex', 'border-b', 'border-b-gray-300');
@@ -15,8 +19,8 @@ const wantToReadBooks = wantToReadParsed.map((wantToReadParse) => {
             <img class="book-cover inset-0 z-30 py-3" src="" alt="book cover">
         </div>
         <div class="h-full w-full ml-4">
-            <h1 class="book-title text-xl text-start mt-2 my-1"></h1>
-            <h3 class="book-subtitle text-md text-start"></h3>
+            <h1 class="book-title text-md text-start mt-2 my-1"></h1>
+            <h3 class="book-subtitle text-sm text-start"></h3>
             <p class="author-name text-sm text-start my-1"></p>
         </div>
     `;

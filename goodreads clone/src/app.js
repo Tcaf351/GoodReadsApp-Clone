@@ -80,7 +80,7 @@ const fetchApi = async (api) => {
                 const toggleLink = document.createElement('a');
                 toggleLink.textContent = 'Read More';
                 toggleLink.href = '#';
-                toggleLink.className = 'text-gray-900 hover:text-gray-300 ml-2';
+                toggleLink.className = 'text-gray-900 hover:text-gray-300 transition ease-in ml-2';
 
                 // Add toggle functionality
                 toggleLink.addEventListener('click', (e) => {

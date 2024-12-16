@@ -11,6 +11,9 @@ console.log(referringURL);
 
 const currentPath = window.location.pathname;
 
+// Remove button
+const removeButton = document.querySelector('#remove-button');
+
 // Declare bookDetails in a higher scope
 let bookDetails = null;
 
@@ -22,6 +25,18 @@ if (referringURL.includes('/read')) {
     // Find the book based on the title
     bookDetails = readParsed.find(book => book.title === bookTitle);
     console.log(bookDetails);
+
+    removeButton.addEventListener('click', () => {
+        // Filter out the book with the matching title
+        const updatedArray = readParsed.filter(book => book.title !== bookTitle);
+    
+        // Update localStorage with the filtered array
+        localStorage.setItem('read', JSON.stringify(updatedArray));
+    
+        // refresh the page/send user back to homepage
+        window.location.href = "/";
+    });
+    
 }
 else if (referringURL.includes('/wantToRead')) {
     // Fetch data from localStorage to match the book title
@@ -31,6 +46,17 @@ else if (referringURL.includes('/wantToRead')) {
     // Find the book based on the title
     bookDetails = wantToReadParsed.find(book => book.title === bookTitle);
     console.log(bookDetails);
+
+    removeButton.addEventListener('click', () => {
+        // Filter out the book with the matching title
+        const updatedArray = wantToReadParsed.filter(book => book.title !== bookTitle);
+    
+        // Update localStorage with the filtered array
+        localStorage.setItem('want to read', JSON.stringify(updatedArray));
+    
+        // refresh the page/send user back to homepage
+        window.location.href = "/";
+    });
 }
 else {
     const errorMessage = document.createElement('p');

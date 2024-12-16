@@ -53,12 +53,12 @@ const fetchApi = async (api) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         } else {
             const apiResponse = await response.json();
-            const data = apiResponse?.items[0].volumeInfo
+            const data = apiResponse?.items[0]?.volumeInfo;
             console.log(data);
 
             const { title, subtitle, description, pageCount, publisher } = data;
             const authors = data.authors[0];
-            const bookImage = data?.imageLinks.thumbnail
+            const bookImage = data?.imageLinks?.thumbnail;
 
             bookPageCount = pageCount;
             console.log(bookPageCount);
@@ -66,23 +66,15 @@ const fetchApi = async (api) => {
             bookSubTitle.textContent = subtitle;
             authorName.textContent = `by ${authors}`;
             bookCover.src = bookImage;
-            bookDescription.textContent = description;
             bookPublisher.textContent = `book published by: ${publisher}`;
 
             modalBookCovers.children[0].src = bookImage;
             modalBookCovers.children[1].src = bookImage;
 
-            // set a limit for bookDescription if over 50 characters
+            // Only create the Read More link if description is longer than 200 characters
             if (description.length > 200) {
-                const shortenedDescription = description.slice(0, 200) + '...';
+                const shortenedDescription = description.slice(0, 200) + '...';  // Ensure shortened version is <= 200 characters
                 let isShortened = true;
-
-                const updateDescription = () => {
-                    bookDescription.textContent = isShortened ? shortenedDescription : description;
-
-                    // Append the toggle link to the description
-                    bookDescription.appendChild(toggleLink);
-                };
 
                 // Create the Read More/Read Less link
                 const toggleLink = document.createElement('a');
@@ -95,25 +87,35 @@ const fetchApi = async (api) => {
                     e.preventDefault(); // Prevent navigation
                     isShortened = !isShortened; // Toggle the state
                     toggleLink.textContent = isShortened ? 'Read More' : 'Read Less'; // Update link text
-                    updateDescription(); // Update the description
+                    bookDescription.textContent = isShortened ? shortenedDescription : description; // Update description text
+
+                    // Append the link only if the description is shortened
+                    if (isShortened) {
+                        bookDescription.appendChild(toggleLink);  // Append link only if shortened
+                    } else {
+                        // Re-append the link when it's in the "Read Less" state
+                        bookDescription.appendChild(toggleLink);  // Keep the link when showing the full description
+                    }
                 });
 
                 // Set initial description and append the link
-                updateDescription();
+                bookDescription.textContent = shortenedDescription;
+                bookDescription.appendChild(toggleLink);
             } else {
+                // If description is less than 200 characters, display it directly
                 bookDescription.textContent = description;
             }
         }
     } catch (error) {
         const messageContainer = document.querySelector('#message-container');
         const errorMessage = document.createElement('p');
-        errorMessage.textContent = "Sorry, we can't find that book. Please try another one"
+        errorMessage.textContent = "Sorry, we can't find that book. Please try another one";
         messageContainer.append(errorMessage);
 
     } finally {
         hideSpinner(); // Hide spinner after fetch is complete
-        toggleApp(); // show app
-        toggleIndividualBookModal()
+        toggleApp(); // Show app
+        toggleIndividualBookModal(); // Show individual book modal
     }
 };
 
@@ -122,7 +124,9 @@ form.addEventListener('submit', async (e) => {
     const searchQuery = inputSearchBar.value;  // Get value from the input search bar
     await fetchApi(apiUrl + searchQuery); // Wait for fetchApi to complete
 
-    // Ensure dropdownHandler is called after the API response is processed
+    // console.log(toggleLink);
+
+    // Ensure dropdownHander is called after the API response is processed
     dropdownHander(dropdown, 
         bookTitle,
         bookSubTitle,
@@ -130,9 +134,10 @@ form.addEventListener('submit', async (e) => {
         bookCover,
         bookDescription,
         bookPublisher,
-        bookPageCount    // Now bookPageCount should be properly set
+        bookPageCount
     );
 });
+
 
 // toggles the hidden class from the #app
 const toggleApp = () => { 

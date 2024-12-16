@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Book Title</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body class="bg-gradient-to-br from-gray-300 to-sky-200 bg-no-repeat h-screen overflow-hidden">
+    <main class="sm:max-w-lg mx-auto mt-4">
+        <nav class="bg-[#E4E2D5] h-12 w-full flex items-center relative px-4 rounded-t-md"> 
+            <div id="back-arrow" class="absolute left-4 hover:cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+            </div>
+              <div class="absolute left-1/2 transform -translate-x-1/2">
+                <h1 class="text-md text-gray-900">Books I Want To Read</h1>
+              </div>
+          </nav>
+        <section class="bg-gray-50 shadow-lg  min-h-[75vh]">
+                <div id="modal-book-covers" class="relative w-full flex items-center justify-center border-2 border-green-500">
+                    <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100"></div>
+            
+                    <img class="book-cover-background absolute z-10 h-full w-full bg-no-repeat bg-cover" src="" alt="blurred book cover behind main book cover">
+                
+                    <img class="book-cover relative inset-0 z-30 bg-no-repeat bg-cover py-3" src="" alt="book cover">
+                </div>
+
+        
+            <div>
+                <h1 id="book-title" class="text-xl text-center mt-2"></h1>
+                <h3 id="book-subtitle" class="text-md text-center"></h3>
+                <p id="author-name" class="text-sm text-center"></p>
+            
+                <hr class="mt-4 w-[96%] mx-auto">
+                <div class="flex items-center justify-center">
+                    
+                    <ul class="px-3">
+                    <span id="publisher" class="text-xs"></span>
+                    </ul>
+                </div>
+                <hr class="w-[96%] mx-auto mb-2">
+                
+                <div class="min-h-[25vh] overflow-auto"> <!-- book description -->
+                    <p id="book-description" class="px-3 text-center max-h-[25vh]"></p>
+                </div>
+            </div>
+        </section>
+        <footer class="flex items-start justify-center bg-[#E4E2D5] h-16 rounded-b-md">
+            <div class="border-solid border-t-2  border-gray-900 py-2 px-4 text-center w-24">
+              <img 
+                src="./img/bookmark-white.png" 
+                alt="book unicode" 
+                class="mx-auto h-6">
+              <span class="text-xs">My Books</span>
+            </div>
+          </footer>
+    </main>
+  <script type="module" src="/src/pages/goToDetailsPage.js"></script>
+</body>
+</html>

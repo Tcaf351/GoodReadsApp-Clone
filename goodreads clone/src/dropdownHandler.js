@@ -1,4 +1,6 @@
 export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bookCover, bookDescription, bookPublisher, bookPageCount) {
+    console.log(bookDescription);
+
     dropdown.addEventListener('change', function() {
         const selectedOption = this.value;
 
@@ -7,7 +9,7 @@ export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bo
             title: bookTitle.textContent,
             subtitle: bookSubTitle.textContent,
             cover: bookCover.currentSrc,
-            description: bookDescription.textContent,
+            description: bookDescription.textContent, // Store the shortened description (before "Read More" is toggled)
             author: authorName.textContent.slice(3),  // Removing "by " from author name
             publisher: bookPublisher.textContent.slice(19),  // Adjust this slicing if needed
             timestamp: Date.now(),

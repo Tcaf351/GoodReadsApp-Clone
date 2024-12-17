@@ -16,6 +16,7 @@ const authorName = document.querySelector('.author-name'); // get authors name
 const bookPublisher = document.querySelector('#publisher');
 const bookCover = document.querySelector('.book-cover'); // get book cover
 const bookDescription = document.querySelector('#book-description'); // get book description
+let originalDescription;
 let bookPageCount; // gets page count of a book
 
 // Buttons
@@ -59,6 +60,9 @@ const fetchApi = async (api) => {
             const { title, subtitle, description, pageCount, publisher } = data;
             const authors = data.authors[0];
             const bookImage = data?.imageLinks?.thumbnail;
+
+            originalDescription = data.description;
+            console.log(originalDescription);
 
             bookPageCount = pageCount;
             console.log(bookPageCount);
@@ -132,6 +136,7 @@ form.addEventListener('submit', async (e) => {
         bookSubTitle,
         authorName,
         bookCover,
+        originalDescription,
         bookDescription,
         bookPublisher,
         bookPageCount

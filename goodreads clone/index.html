@@ -16,34 +16,30 @@
         </div>
         <!-- spinner-finish -->
 
-        <!-- modal (Update progress) - start -->
-        <section class="hidden modal px-4 py-5 h-1/3 z-40 absolute w-full m-auto"> <!-- modal container --> <!--  -->
-            <div class=" h-full w-full bg-gray-300 rounded-md">
-                <nav class="flex justify-between mb-10"> <!-- nav section of modal -->
-                <button class="cancel-button">Cancel</button>
-                <li class="list-none">Progress</li>
-                <button id="update-progress-modal-done-button">Done</button>
-              </nav>
-  
-              <div class="flex justify-center items-center"> <!-- page count section of modal -->
-                <span>I'm on page</span>
-                <input id="modal-user-page-number" type="text" name="page number" class="border-2 border-red-500 mx-1"> <!-- user enters page number -->
-              </div>
-  
-              <div class="flex items-center justify-center"> <!-- book count section of modal -->
-                <img src="" alt="book cover"> <!-- shows cover of book -->
-              </div>
+        <!-- modal overlay -->
+        <div class="hidden overlay fixed inset-0 w-screen h-screen z-40 bg-black/50 blur-sm"></div>
+
+        <!-- modal (Update progress) -->
+        <section class="hidden modal absolute inset-0 z-40 flex items-center justify-center px-4 py-5"> 
+          <div class="h-1/4 w-full max-w-md bg-gray-300 rounded-md"> <!-- max-w-md keeps modal centered -->
+            <nav class="flex justify-between my-5 px-4">
+              <button class="cancel-button">Cancel</button>
+              <li class="list-none">Progress</li>
+              <button id="update-progress-modal-done-button">Done</button>
+            </nav>
+
+            <div class="flex justify-center items-center mb-4">
+              <span>I'm on page</span>
+              <input id="modal-user-page-number" type="text" name="page number" class="mx-1 border border-gray-400 rounded px-2">
             </div>
+          </div>
         </section>
 
-        <div class="overlay hidden fixed w-full h-full z-10 bg-black/50 blur-sm"></div> <!-- modal overlay -->
-        <!-- modal (Update progress) - finish -->
 
         <!-- modal (book details) - start -->
         <section id="individual-book-modal" class="hidden flex flex-col items-center justify-center bg-gray-50 rounded-md shadow-lg">
 
-          <div class="relative w-full h-2/5">
-            <div id="modal-book-covers" class="relative h-full flex items-center justify-center">
+            <div id="modal-book-covers" class="relative w-full flex items-center justify-center">
               <div class="z-20 h-full w-full absolute backdrop-blur bg-gray-500 bg-opacity-40 saturate-100 backdrop-contrast-100 rounded-t-md"></div>
 
               <img class="absolute z-10 h-full w-full bg-no-repeat bg-cover rounded-t-md" src="" alt="blurred book cover behind main book cover">
@@ -51,7 +47,6 @@
           
               <img class="book-cover relative inset-0 z-30 bg-no-repeat bg-cover py-3" src="" alt="book cover">
             </div>
-          </div>
         
 
           <div class="h-full w-full">
@@ -115,7 +110,7 @@
               <input value="Search" 
                     type="submit"
                     id="search-button" 
-                    class="rounded-s-none rounded-full absolute right-0 top-0 bottom-0 my-auto h-full px-4 bg-gradient-to-b from-gray-500 to-gray-300 transition ease-in duration-150">
+                    class="rounded-s-none cursor-pointer rounded-full absolute right-0 top-0 bottom-0 my-auto h-full px-4 bg-gradient-to-b from-gray-500 to-gray-300 transition ease-in duration-150">
             </form>
           </div> <!-- search bar/container finish -->
 

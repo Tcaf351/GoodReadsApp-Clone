@@ -5,6 +5,7 @@ import { dropdownHander } from "./dropdownHandler";
 import { windowOnLoadLocalStorage, windowOnLoadLocalStorageWantToRead, windowOnLoadLocalStorageRead, windowOnLoadLocalStorageCurrentlyReading } from "./localStorageHandler";
 import { calculatePercentageOfBookCompletion } from "./calculateBookPercentage";
 import { getUrl } from './backArrow';
+import './input.css';
 
 // get app
 export const app = document.querySelector('#app');

@@ -31,12 +31,12 @@ export const calculatePercentageOfBookCompletion = () => {
     });
 
     doneButton.addEventListener('click', () => {
-        if (percentageForCompletionOfBook >= 0 && percentageForCompletionOfBook <= 100) {
+        if (percentageForCompletionOfBook >= 0 && percentageForCompletionOfBook <= 110) {
             // Update the latest book's progress
             latestBook.percentageCompleted = percentageForCompletionOfBook;
 
             // If the book is completed (percentage is 100), move it to the "read" category
-            if (percentageForCompletionOfBook === 100) {
+            if (percentageForCompletionOfBook >= 100) {
                 // Remove the book from "currently reading"
                 parsedCurrentlyReadingCategory.pop(); // Remove the last book
                 location.reload();

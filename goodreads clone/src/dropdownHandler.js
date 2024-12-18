@@ -1,29 +1,11 @@
-export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bookCover, originalDescription, bookDescription, bookPublisher, bookPageCount) {
-    console.log(bookDescription);
-
-    dropdown.addEventListener('change', function() {
+export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bookCover, longDescription, bookDescription, bookPublisher, bookPageCount) {
+    dropdown.addEventListener('change', function () {
         const selectedOption = this.value;
-
-        // book data to be saved to localStorage
-        const bookData = {
-            title: bookTitle.textContent,
-            subtitle: bookSubTitle.textContent,
-            cover: bookCover.currentSrc,
-            originalDescription: originalDescription.textContent,
-            description: bookDescription.textContent, // Store the shortened description (before "Read More" is toggled)
-            author: authorName.textContent.slice(3),  // Removing "by " from author name
-            publisher: bookPublisher.textContent.slice(19),  // Adjust this slicing if needed
-            timestamp: Date.now(),
-            pageCount: bookPageCount,  // Should be correctly passed now
-            percentageCompleted: 0
-        };
-
-        console.log("bookData:", bookData);  // Ensure bookData is correct
 
         // LocalStorage logic remains the same
         const addToLocalStorage = (key, bookData) => {
             const errorMessageContainer = document.querySelector('#message-container');
-            errorMessageContainer.textContent = ''; // clears previous message
+            errorMessageContainer.textContent = ''; // Clear previous messages
 
             let storedBooks = JSON.parse(localStorage.getItem(key)) || [];
 
@@ -41,6 +23,21 @@ export function dropdownHander(dropdown, bookTitle, bookSubTitle, authorName, bo
         dropdownSubmitButton.addEventListener('click', () => {
             const errorMessageContainer = document.querySelector('#message-container');
             const errorMessage = document.createElement('span');
+
+            const bookData = {
+                title: bookTitle.textContent,
+                subtitle: bookSubTitle.textContent,
+                cover: bookCover.currentSrc,
+                longDescription: longDescription,
+                description: bookDescription.textContent, // Save the full description
+                author: authorName.textContent.slice(3), // Remove "by " prefix from author
+                publisher: bookPublisher.textContent.slice(19), // Adjust this slicing if needed
+                timestamp: Date.now(),
+                pageCount: bookPageCount, // Should be correctly passed now
+                percentageCompleted: 0
+            };
+
+            console.log("bookData:", bookData); // Ensure bookData is correct
 
             switch (selectedOption) {
                 case 'want to read':

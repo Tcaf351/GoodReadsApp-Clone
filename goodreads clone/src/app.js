@@ -16,7 +16,6 @@ const authorName = document.querySelector('.author-name'); // get authors name
 const bookPublisher = document.querySelector('#publisher');
 const bookCover = document.querySelector('.book-cover'); // get book cover
 const bookDescription = document.querySelector('#book-description'); // get book description
-let originalDescription;
 let bookPageCount; // gets page count of a book
 
 // Buttons
@@ -44,6 +43,7 @@ const inputSearchBar = document.querySelector('#search-bar');
 
 // api
 const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=`;
+let longDescription;
 
 const fetchApi = async (api) => {
     try {
@@ -61,9 +61,8 @@ const fetchApi = async (api) => {
             const authors = data.authors[0];
             const bookImage = data?.imageLinks?.thumbnail;
 
-            originalDescription = data.description;
-            console.log(originalDescription);
-
+            longDescription = description;
+            bookDescription.textContent = description;
             bookPageCount = pageCount;
             console.log(bookPageCount);
             bookTitle.textContent = title;
@@ -74,41 +73,6 @@ const fetchApi = async (api) => {
 
             modalBookCovers.children[0].src = bookImage;
             modalBookCovers.children[1].src = bookImage;
-
-            // Only create the Read More link if description is longer than 200 characters
-            if (description.length > 200) {
-                const shortenedDescription = description.slice(0, 200) + '...';  // Ensure shortened version is <= 200 characters
-                let isShortened = true;
-
-                // Create the Read More/Read Less link
-                const toggleLink = document.createElement('a');
-                toggleLink.textContent = 'Read More';
-                toggleLink.href = '#';
-                toggleLink.className = 'text-gray-900 hover:text-gray-300 transition ease-in ml-2';
-
-                // Add toggle functionality
-                toggleLink.addEventListener('click', (e) => {
-                    e.preventDefault(); // Prevent navigation
-                    isShortened = !isShortened; // Toggle the state
-                    toggleLink.textContent = isShortened ? 'Read More' : 'Read Less'; // Update link text
-                    bookDescription.textContent = isShortened ? shortenedDescription : description; // Update description text
-
-                    // Append the link only if the description is shortened
-                    if (isShortened) {
-                        bookDescription.appendChild(toggleLink);  // Append link only if shortened
-                    } else {
-                        // Re-append the link when it's in the "Read Less" state
-                        bookDescription.appendChild(toggleLink);  // Keep the link when showing the full description
-                    }
-                });
-
-                // Set initial description and append the link
-                bookDescription.textContent = shortenedDescription;
-                bookDescription.appendChild(toggleLink);
-            } else {
-                // If description is less than 200 characters, display it directly
-                bookDescription.textContent = description;
-            }
         }
     } catch (error) {
         const messageContainer = document.querySelector('#message-container');
@@ -123,12 +87,62 @@ const fetchApi = async (api) => {
     }
 };
 
+// Only create the Read More link if description is longer than 200 characters
+// if (bookDetails.description.length > 200) {
+//     const description = bookDetails.description; // Store the full description
+//     const shortenedDescription = description.slice(0, 200) + '...'; // Truncate the description
+//     let isShortened = true;
+
+//     // Create the Read More/Read Less link
+//     const toggleLink = document.createElement('a');
+//     toggleLink.textContent = 'Read More';
+//     toggleLink.href = '#';
+//     toggleLink.className = 'text-gray-900 hover:text-gray-300 transition ease-in ml-2';
+
+//     // Add toggle functionality
+//     toggleLink.addEventListener('click', (e) => {
+//         e.preventDefault(); // Prevent navigation
+//         isShortened = !isShortened; // Toggle the state
+//         toggleLink.textContent = isShortened ? 'Read More' : 'Read Less'; // Update link text
+//         bookDescriptionElement.textContent = isShortened ? shortenedDescription : description; // Update DOM description
+//         bookDescriptionElement.appendChild(toggleLink); // Append the link to the description
+//     });
+
+//     // Set initial description and append the link
+//     bookDescriptionElement.textContent = shortenedDescription;
+//     bookDescriptionElement.appendChild(toggleLink);
+// }
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();  // Prevent default form submission
     const searchQuery = inputSearchBar.value;  // Get value from the input search bar
     await fetchApi(apiUrl + searchQuery); // Wait for fetchApi to complete
 
-    // console.log(toggleLink);
+     // Only create the Read More link if description is longer than 200 characters
+     if (bookDescription.textContent.length > 200) {
+        const fullDescription = bookDescription.textContent; // Store the full description
+        const shortenedDescription = fullDescription.slice(0, 200) + '...'; // Truncate the description
+        let isShortened = true;
+
+        // Create the Read More/Read Less link
+        const toggleLink = document.createElement('a');
+        toggleLink.textContent = 'Read More';
+        toggleLink.href = '#';
+        toggleLink.className = 'text-gray-900 hover:text-gray-300 transition ease-in ml-2';
+
+        // Add toggle functionality
+        toggleLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent navigation
+            isShortened = !isShortened; // Toggle the state
+            toggleLink.textContent = isShortened ? 'Read More' : 'Read Less'; // Update link text
+            bookDescription.textContent = isShortened ? shortenedDescription : fullDescription; // Update DOM description
+            bookDescription.appendChild(toggleLink); // Append the link to the description
+        });
+
+        // Set initial description and append the link
+        bookDescription.textContent = shortenedDescription;
+        bookDescription.appendChild(toggleLink);
+    }
 
     // Ensure dropdownHander is called after the API response is processed
     dropdownHander(dropdown, 
@@ -136,7 +150,7 @@ form.addEventListener('submit', async (e) => {
         bookSubTitle,
         authorName,
         bookCover,
-        originalDescription,
+        longDescription,
         bookDescription,
         bookPublisher,
         bookPageCount

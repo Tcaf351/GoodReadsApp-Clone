@@ -1,6 +1,7 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ]
-  }
-  
+  "rewrites": [
+    { "source": "/read", "destination": "/read.html" },
+    { "source": "/bookDetails", "destination": "/bookDetails.html" },
+    { "source": "/wantToRead", "destination": "/wantToRead.html" }
+  ]
+}
